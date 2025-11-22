@@ -1,7 +1,8 @@
 {
     "name": "Notefy",
     "short_name": "Notefy",
-    "start_url": "./",
+    "start_url": "/projects/notefy/notefy.html",
+    "scope": "/projects/notefy/"
     "display": "standalone",
     "background_color": "#1a1a1a",
     "theme_color": "#1a1a1a",
