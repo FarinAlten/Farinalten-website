@@ -5,174 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a1a">
     <title>Notefy</title>
+    <meta name="description" content="Deine persönliche Notizen App">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Notefy">
     <link rel="apple-touch-icon" href="notefy-app-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="notefy-app-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="notefy-app-icon.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="notefy-app-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="notefy-app-icon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="notefy-app-icon.png">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="../../../css/style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #ffffff;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            font-weight: 300;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            font-size: 1.1em;
-            color: #aaa;
-            font-weight: 300;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: rgba(66, 153, 225, 0.3);
-            border-color: rgba(66, 153, 225, 0.5);
-        }
-
-        .btn-primary:hover {
-            background: rgba(66, 153, 225, 0.5);
-        }
-
-        .status {
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4ade80;
-        }
-
         .note-editor {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
+            display: none;
+        }
+
+        .note-editor h2 {
+            margin-bottom: 20px;
+            font-weight: 700;
         }
 
         input[type="text"], textarea {
             width: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #222;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-family: inherit;
             margin-bottom: 15px;
+            transition: all 0.18s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+            background: white;
         }
 
         textarea {
             min-height: 200px;
             resize: vertical;
             font-family: 'Courier New', monospace;
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: #888;
+            line-height: 1.6;
         }
 
         .notes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 36px;
             margin-top: 30px;
+            width: 100%;
         }
 
         .note-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .note-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-4px);
+            transition: all 0.18s ease;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
         }
 
         .note-title {
-            font-size: 1.2em;
-            font-weight: 500;
-            margin-bottom: 10px;
+            font-size: 1.45em;
+            font-weight: 700;
+            margin-bottom: 14px;
             word-break: break-word;
+            line-height: 1.3;
         }
 
         .note-content {
-            color: #aaa;
-            font-size: 0.9em;
-            line-height: 1.5;
+            font-size: 1.12em;
+            line-height: 1.6;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             word-break: break-word;
+            flex: 1;
         }
 
         .note-meta {
@@ -181,7 +95,7 @@
             align-items: center;
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.8em;
             color: #888;
         }
@@ -196,11 +110,29 @@
             font-size: 12px;
         }
 
+        .status {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+
+        .status.offline .status-indicator {
+            background: #ef4444;
+        }
+
         .install-prompt {
-            background: rgba(66, 153, 225, 0.2);
-            border: 1px solid rgba(66, 153, 225, 0.4);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 30px;
             text-align: center;
         }
@@ -209,20 +141,28 @@
             margin-top: 15px;
         }
 
+        @media (prefers-color-scheme: dark) {
+            .note-editor h2 {
+                color: #fff;
+            }
+
+            input[type="text"], textarea {
+                background: rgba(30, 30, 30, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+
+            input[type="text"]:focus, textarea:focus {
+                border-color: #90caf9;
+                background: rgba(40, 40, 40, 0.9);
+            }
+
+            .note-meta {
+                border-top-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            header {
-                padding: 20px 10px;
-                margin-bottom: 20px;
-            }
-            
             .notes-grid {
                 grid-template-columns: 1fr;
             }
@@ -230,20 +170,20 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Notefy</h1>
-            <p class="subtitle">Deine persönliche Notizen App</p>
-        </header>
+    <div class="content">
+        <div class="headerbox">
+            <h1 class="title">Notefy</h1>
+            <p class="headersubtitle">Deine persönliche Notizen App</p>
+        </div>
 
-        <div id="installPrompt" class="install-prompt" style="display: none;">
+        <div id="installPrompt" class="install-prompt Box" style="display: none;">
             <p>📱 Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
             <button onclick="installApp()">Jetzt installieren</button>
         </div>
 
-        <div class="status" id="status">
+        <div class="status Box" id="status">
             <span class="status-indicator"></span>
-            <span id="statusText">App bereit - Notizen werden lokal gespeichert</span>
+            <span id="statusText">App bereit - funktioniert auch offline</span>
         </div>
 
         <div class="controls">
@@ -253,8 +193,8 @@
             <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importNotes(event)">
         </div>
 
-        <div class="note-editor" id="editor" style="display: none;">
-            <h2 style="margin-bottom: 20px;">Notiz bearbeiten</h2>
+        <div class="note-editor Box" id="editor">
+            <h2>Notiz bearbeiten</h2>
             <input type="text" id="noteTitle" placeholder="Titel...">
             <textarea id="noteContent" placeholder="Deine Notiz hier..."></textarea>
             <div style="display: flex; gap: 10px;">
@@ -280,6 +220,10 @@
             await loadNotes();
             setupPWA();
             registerServiceWorker();
+            checkOnlineStatus();
+            
+            window.addEventListener('online', checkOnlineStatus);
+            window.addEventListener('offline', checkOnlineStatus);
         }
 
         function initDB() {
@@ -361,12 +305,12 @@
             const grid = document.getElementById('notesGrid');
             
             if (notes.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: #888; grid-column: 1/-1;">Noch keine Notizen vorhanden. Erstelle deine erste Notiz!</p>';
+                grid.innerHTML = '<div class="Box" style="grid-column: 1/-1; text-align: center;"><p class="subtitle">Noch keine Notizen vorhanden. Erstelle deine erste Notiz!</p></div>';
                 return;
             }
 
             grid.innerHTML = notes.reverse().map(note => `
-                <div class="note-card" onclick="editNote(${note.id})">
+                <div class="Box note-card" onclick="editNote(${note.id})">
                     <div class="note-title">${escapeHtml(note.title)}</div>
                     <div class="note-content">${escapeHtml(note.content)}</div>
                     <div class="note-meta">
@@ -516,6 +460,19 @@
             deferredPrompt = null;
         }
 
+        function checkOnlineStatus() {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            
+            if (navigator.onLine) {
+                status.classList.remove('offline');
+                statusText.textContent = 'Online - Notizen werden lokal gespeichert';
+            } else {
+                status.classList.add('offline');
+                statusText.textContent = 'Offline - App funktioniert weiterhin';
+            }
+        }
+
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
@@ -525,29 +482,87 @@
         function registerServiceWorker() {
             if ('serviceWorker' in navigator) {
                 const swCode = `
-                    self.addEventListener('install', (event) => {
-                        self.skipWaiting();
-                    });
+const CACHE_NAME = 'notefy-v1';
+const urlsToCache = [
+    './',
+    './notefy.html',
+    './manifest.json',
+    './notefy-app-icon.png',
+    '../../../css/style.css'
+];
 
-                    self.addEventListener('activate', (event) => {
-                        event.waitUntil(clients.claim());
-                    });
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => {
+                console.log('Cache opened');
+                return cache.addAll(urlsToCache);
+            })
+            .catch((error) => {
+                console.log('Cache error:', error);
+            })
+    );
+    self.skipWaiting();
+});
 
-                    self.addEventListener('fetch', (event) => {
-                        event.respondWith(
-                            fetch(event.request).catch(() => {
-                                return new Response('Offline', { status: 503 });
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+    event.waitUntil(clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request)
+            .then((response) => {
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request)
+                    .then((response) => {
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+                        const responseToCache = response.clone();
+                        caches.open(CACHE_NAME)
+                            .then((cache) => {
+                                cache.put(event.request, responseToCache);
+                            });
+                        return response;
+                    })
+                    .catch(() => {
+                        return new Response('Offline - Bitte später erneut versuchen', {
+                            status: 503,
+                            statusText: 'Service Unavailable',
+                            headers: new Headers({
+                                'Content-Type': 'text/plain'
                             })
-                        );
+                        });
                     });
+            })
+    );
+});
                 `;
                 
                 const blob = new Blob([swCode], { type: 'application/javascript' });
                 const swUrl = URL.createObjectURL(blob);
                 
                 navigator.serviceWorker.register(swUrl)
-                    .then(() => console.log('Service Worker registriert'))
-                    .catch(err => console.error('Service Worker Fehler:', err));
+                    .then((registration) => {
+                        console.log('Service Worker registriert:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker Registrierung fehlgeschlagen:', error);
+                    });
             }
         }
     </script>
