@@ -16,74 +16,283 @@
     <link rel="icon" type="image/png" sizes="192x192" href="notefy-app-icon.png">
     <link rel="icon" type="image/png" sizes="512x512" href="notefy-app-icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="../../../css/style.css">
     <style>
-        .note-editor {
-            display: none;
+        :root {
+            --primary: #6750A4;
+            --primary-container: #EADDFF;
+            --on-primary: #FFFFFF;
+            --secondary: #625B71;
+            --secondary-container: #E8DEF8;
+            --tertiary: #7D5260;
+            --surface: #FEF7FF;
+            --surface-variant: #E7E0EC;
+            --on-surface: #1C1B1F;
+            --on-surface-variant: #49454F;
+            --outline: #79747E;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --glass-surface: rgba(255, 255, 255, 0.7);
+            --glass-blur: 40px;
         }
 
-        .note-editor h2 {
-            margin-bottom: 20px;
+        [data-theme="dark"] {
+            --primary: #D0BCFF;
+            --primary-container: #4F378B;
+            --on-primary: #371E73;
+            --secondary: #CCC2DC;
+            --secondary-container: #4A4458;
+            --tertiary: #EFB8C8;
+            --surface: #1C1B1F;
+            --surface-variant: #49454F;
+            --on-surface: #E6E1E5;
+            --on-surface-variant: #CAC4D0;
+            --outline: #938F99;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --glass-surface: rgba(28, 27, 31, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-variant) 100%);
+            color: var(--on-surface);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--glass-surface);
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 28px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px var(--shadow), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+        }
+
+        h1 {
+            font-size: 2.5em;
             font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--tertiary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        input[type="text"], textarea {
+        .subtitle {
+            font-size: 1em;
+            color: var(--on-surface-variant);
+            font-weight: 400;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: var(--glass-surface);
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 100px;
+            padding: 6px;
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--on-surface-variant);
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--on-primary);
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: var(--surface-variant);
+        }
+
+        .glass-card {
+            background: var(--glass-surface);
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 32px var(--shadow),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px var(--shadow),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        button {
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(103, 80, 164, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(103, 80, 164, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-container);
+            color: var(--secondary);
+            box-shadow: 0 4px 16px rgba(98, 91, 113, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"], textarea, select {
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            color: #222;
-            padding: 12px;
-            border-radius: 12px;
+            background: var(--surface-variant);
+            border: 2px solid transparent;
+            color: var(--on-surface);
+            padding: 16px;
+            border-radius: 16px;
             font-size: 16px;
             font-family: inherit;
-            margin-bottom: 15px;
-            transition: all 0.18s;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
         }
 
-        input[type="text"]:focus, textarea:focus {
+        input[type="text"]:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: #1976d2;
-            background: white;
+            border-color: var(--primary);
+            background: var(--surface);
+            box-shadow: 0 0 0 4px rgba(103, 80, 164, 0.1);
         }
 
         textarea {
             min-height: 200px;
             resize: vertical;
-            font-family: 'Courier New', monospace;
             line-height: 1.6;
         }
 
         .notes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 36px;
-            margin-top: 30px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
         }
 
         .note-card {
             cursor: pointer;
-            transition: all 0.18s ease;
             min-height: 200px;
             display: flex;
             flex-direction: column;
         }
 
+        .note-card:hover {
+            transform: translateY(-8px);
+        }
+
         .note-title {
-            font-size: 1.45em;
+            font-size: 1.5em;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+            color: var(--primary);
             word-break: break-word;
             line-height: 1.3;
         }
 
         .note-content {
-            font-size: 1.12em;
+            font-size: 1em;
             line-height: 1.6;
+            color: var(--on-surface-variant);
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             word-break: break-word;
             flex: 1;
@@ -93,117 +302,418 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            font-size: 0.8em;
-            color: #888;
-        }
-
-        .note-actions {
-            display: flex;
-            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--outline);
+            font-size: 0.85em;
+            color: var(--on-surface-variant);
         }
 
         .note-actions button {
-            padding: 6px 12px;
-            font-size: 12px;
+            padding: 8px 16px;
+            font-size: 20px;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .note-actions button:hover {
+            background: rgba(103, 80, 164, 0.1);
+        }
+
+        .settings-section {
+            margin-bottom: 24px;
+        }
+
+        .settings-section h3 {
+            font-size: 1.2em;
+            margin-bottom: 16px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--outline);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            flex: 1;
+        }
+
+        .setting-label h4 {
+            font-size: 1em;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .setting-label p {
+            font-size: 0.85em;
+            color: var(--on-surface-variant);
+        }
+
+        .toggle {
+            position: relative;
+            width: 52px;
+            height: 32px;
+            background: var(--surface-variant);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--outline);
+        }
+
+        .toggle.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle.active::after {
+            left: 22px;
+        }
+
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .color-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            border-color: var(--on-surface);
+            box-shadow: 0 0 0 4px rgba(103, 80, 164, 0.2);
+        }
+
+        .color-option::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .color-option.active::after {
+            opacity: 1;
         }
 
         .status {
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            background: var(--glass-surface);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .status-indicator {
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: #4ade80;
+            background: #4CAF50;
+            box-shadow: 0 0 8px #4CAF50;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .status.offline .status-indicator {
-            background: #ef4444;
+            background: #F44336;
+            box-shadow: 0 0 8px #F44336;
         }
 
         .install-prompt {
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 30px;
             text-align: center;
+            padding: 24px;
+            margin-bottom: 24px;
         }
 
-        .install-prompt button {
-            margin-top: 15px;
+        .page-view {
+            display: none;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .note-editor h2 {
-                color: #fff;
-            }
+        .page-view.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
 
-            input[type="text"], textarea {
-                background: rgba(30, 30, 30, 0.8);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                color: white;
-            }
-
-            input[type="text"]:focus, textarea:focus {
-                border-color: #90caf9;
-                background: rgba(40, 40, 40, 0.9);
-            }
-
-            .note-meta {
-                border-top-color: rgba(255, 255, 255, 0.1);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
             .notes-grid {
                 grid-template-columns: 1fr;
             }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .color-options {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--on-surface-variant);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: var(--surface-variant);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.4);
+            border: none;
         }
     </style>
 </head>
 <body>
-    <div class="content">
-        <div class="headerbox">
-            <h1 class="title">Notefy</h1>
-            <p class="headersubtitle">Deine persönliche Notizen App</p>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Notefy</h1>
+            <p class="subtitle">Deine persönliche Notizen-App mit Style</p>
+        </header>
 
-        <div id="installPrompt" class="install-prompt Box" style="display: none;">
-            <p>📱 Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
+        <div id="installPrompt" class="install-prompt glass-card" style="display: none;">
+            <p style="margin-bottom: 16px;">📱 Installiere Notefy als App für schnellen Zugriff!</p>
             <button onclick="installApp()">Jetzt installieren</button>
         </div>
 
-        <div class="status Box" id="status">
+        <div class="status" id="status">
             <span class="status-indicator"></span>
-            <span id="statusText">App bereit - funktioniert auch offline</span>
+            <span id="statusText">Online - Bereit zum Notieren</span>
         </div>
 
-        <div class="controls">
-            <button class="btn-primary" onclick="showEditor()">+ Neue Notiz</button>
-            <button onclick="exportNotes()">📤 Exportieren</button>
-            <button onclick="document.getElementById('importFile').click()">📥 Importieren</button>
-            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importNotes(event)">
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('notes')">📝 Notizen</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ Einstellungen</button>
+        </nav>
+
+        <!-- Notizen Page -->
+        <div id="notesPage" class="page-view active">
+            <div class="controls">
+                <button onclick="showEditor()">✏️ Neue Notiz</button>
+                <button class="btn-secondary" onclick="exportNotes()">📤 Exportieren</button>
+                <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📥 Importieren</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importNotes(event)">
+            </div>
+
+            <div class="glass-card" id="editor" style="display: none; margin-bottom: 24px;">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Notiz bearbeiten</h2>
+                <input type="text" id="noteTitle" placeholder="Titel deiner Notiz...">
+                <textarea id="noteContent" placeholder="Schreibe deine Gedanken hier nieder..."></textarea>
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="saveNote()">💾 Speichern</button>
+                    <button class="btn-secondary" onclick="cancelEdit()">✖️ Abbrechen</button>
+                </div>
+            </div>
+
+            <div class="notes-grid" id="notesGrid"></div>
         </div>
 
-        <div class="note-editor Box" id="editor">
-            <h2>Notiz bearbeiten</h2>
-            <input type="text" id="noteTitle" placeholder="Titel...">
-            <textarea id="noteContent" placeholder="Deine Notiz hier..."></textarea>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-primary" onclick="saveNote()">Speichern</button>
-                <button onclick="cancelEdit()">Abbrechen</button>
+        <!-- Einstellungen Page -->
+        <div id="settingsPage" class="page-view">
+            <div class="glass-card settings-section">
+                <h3>🎨 Darstellung</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Dark Mode</h4>
+                        <p>Dunkles Design für deine Augen</p>
+                    </div>
+                    <div class="toggle" id="darkModeToggle" onclick="toggleDarkMode()"></div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Akzentfarbe</h4>
+                        <p>Wähle deine Lieblingsfarbe</p>
+                    </div>
+                </div>
+                <div class="color-options">
+                    <div class="color-option active" data-primary="#6750A4" style="background: linear-gradient(135deg, #6750A4, #9980D1);" onclick="changeAccentColor(this)"></div>
+                    <div class="color-option" data-primary="#B00020" style="background: linear-gradient(135deg, #B00020, #FF5252);" onclick="changeAccentColor(this)"></div>
+                    <div class="color-option" data-primary="#018786" style="background: linear-gradient(135deg, #018786, #4DB6AC);" onclick="changeAccentColor(this)"></div>
+                    <div class="color-option" data-primary="#6200EE" style="background: linear-gradient(135deg, #6200EE, #9D46FF);" onclick="changeAccentColor(this)"></div>
+                    <div class="color-option" data-primary="#FF6F00" style="background: linear-gradient(135deg, #FF6F00, #FFB300);" onclick="changeAccentColor(this)"></div>
+                    <div class="color-option" data-primary="#2E7D32" style="background: linear-gradient(135deg, #2E7D32, #66BB6A);" onclick="changeAccentColor(this)"></div>
+                </div>
+            </div>
+
+            <div class="glass-card settings-section">
+                <h3>✍️ Editor</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Schriftgröße</h4>
+                        <p id="fontSizeLabel">16px</p>
+                    </div>
+                </div>
+                <input type="range" id="fontSizeRange" min="12" max="24" value="16" step="1" oninput="changeFontSize(this.value)">
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Monospace-Font</h4>
+                        <p>Code-Schriftart für Notizen</p>
+                    </div>
+                    <div class="toggle" id="monoToggle" onclick="toggleMonospace()"></div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Zeilenhöhe</h4>
+                        <p id="lineHeightLabel">1.6</p>
+                    </div>
+                </div>
+                <input type="range" id="lineHeightRange" min="1.2" max="2.4" value="1.6" step="0.2" oninput="changeLineHeight(this.value)">
+            </div>
+
+            <div class="glass-card settings-section">
+                <h3>📊 Notizen-Ansicht</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Spaltenanzahl</h4>
+                        <p id="columnsLabel">Automatisch</p>
+                    </div>
+                </div>
+                <select id="columnsSelect" onchange="changeColumns(this.value)">
+                    <option value="auto">Automatisch</option>
+                    <option value="1">1 Spalte</option>
+                    <option value="2">2 Spalten</option>
+                    <option value="3">3 Spalten</option>
+                    <option value="4">4 Spalten</option>
+                </select>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Kompakte Ansicht</h4>
+                        <p>Kleinere Karten für mehr Übersicht</p>
+                    </div>
+                    <div class="toggle" id="compactToggle" onclick="toggleCompactView()"></div>
+                </div>
+            </div>
+
+            <div class="glass-card settings-section">
+                <h3>💾 Daten</h3>
+                
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Gespeicherte Notizen</h4>
+                        <p id="noteCount">0 Notizen</p>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Alle Notizen löschen</h4>
+                        <p>Unwiderruflich alle Notizen entfernen</p>
+                    </div>
+                    <button class="btn-secondary" onclick="clearAllNotes()" style="width: auto;">🗑️ Alle löschen</button>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <h4>Einstellungen zurücksetzen</h4>
+                        <p>Auf Standardeinstellungen zurücksetzen</p>
+                    </div>
+                    <button class="btn-secondary" onclick="resetSettings()" style="width: auto;">🔄 Zurücksetzen</button>
+                </div>
+            </div>
+
+            <div class="glass-card" style="text-align: center;">
+                <p style="color: var(--on-surface-variant); margin-bottom: 8px;">Notefy v1.0</p>
+                <p style="color: var(--on-surface-variant); font-size: 0.85em;">Made with 💜 by Farin</p>
             </div>
         </div>
-
-        <div class="notes-grid" id="notesGrid"></div>
     </div>
 
     <script>
@@ -218,353 +728,83 @@
         async function initApp() {
             await initDB();
             await loadNotes();
+            loadSettings();
             setupPWA();
             registerServiceWorker();
             checkOnlineStatus();
+            updateNoteCount();
             
             window.addEventListener('online', checkOnlineStatus);
             window.addEventListener('offline', checkOnlineStatus);
         }
 
-        function initDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, 1);
-                
-                request.onerror = () => reject(request.error);
-                request.onsuccess = () => {
-                    db = request.result;
-                    resolve();
-                };
-                
-                request.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains(STORE_NAME)) {
-                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-                        store.createIndex('timestamp', 'timestamp', { unique: false });
-                    }
-                };
-            });
-        }
-
-        async function saveNote() {
-            const title = document.getElementById('noteTitle').value.trim();
-            const content = document.getElementById('noteContent').value.trim();
+        // Tab Switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
             
-            if (!title || !content) {
-                alert('Bitte Titel und Inhalt eingeben!');
-                return;
-            }
-
-            const note = {
-                title,
-                content,
-                timestamp: Date.now()
-            };
-
-            if (currentEditId) {
-                note.id = currentEditId;
-            }
-
-            const transaction = db.transaction([STORE_NAME], 'readwrite');
-            const store = transaction.objectStore(STORE_NAME);
-            
-            try {
-                if (currentEditId) {
-                    await store.put(note);
-                } else {
-                    await store.add(note);
-                }
-                
-                cancelEdit();
-                await loadNotes();
-            } catch (error) {
-                console.error('Error saving note:', error);
-                alert('Fehler beim Speichern der Notiz.');
-            }
-        }
-
-        async function loadNotes() {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.getAll();
-
-                request.onsuccess = () => {
-                    const notes = request.result;
-                    displayNotes(notes);
-                    resolve();
-                };
-
-                request.onerror = () => {
-                    reject(request.error);
-                };
-            });
-        }
-
-        function displayNotes(notes) {
-            const grid = document.getElementById('notesGrid');
-            
-            if (notes.length === 0) {
-                grid.innerHTML = '<div class="Box" style="grid-column: 1/-1; text-align: center;"><p class="subtitle">Noch keine Notizen vorhanden. Erstelle deine erste Notiz!</p></div>';
-                return;
-            }
-
-            grid.innerHTML = notes.reverse().map(note => `
-                <div class="Box note-card" onclick="editNote(${note.id})">
-                    <div class="note-title">${escapeHtml(note.title)}</div>
-                    <div class="note-content">${escapeHtml(note.content)}</div>
-                    <div class="note-meta">
-                        <span>${new Date(note.timestamp).toLocaleDateString('de-DE')}</span>
-                        <div class="note-actions">
-                            <button onclick="deleteNote(event, ${note.id})">🗑️</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        async function editNote(id) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.get(id);
-
-                request.onsuccess = () => {
-                    const note = request.result;
-                    if (note) {
-                        currentEditId = id;
-                        document.getElementById('noteTitle').value = note.title;
-                        document.getElementById('noteContent').value = note.content;
-                        showEditor();
-                    }
-                    resolve();
-                };
-
-                request.onerror = () => {
-                    reject(request.error);
-                };
-            });
-        }
-
-        async function deleteNote(event, id) {
-            event.stopPropagation();
-            
-            if (!confirm('Notiz wirklich löschen?')) return;
-
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.delete(id);
-
-                request.onsuccess = async () => {
-                    await loadNotes();
-                    resolve();
-                };
-
-                request.onerror = () => {
-                    reject(request.error);
-                };
-            });
-        }
-
-        function showEditor() {
-            document.getElementById('editor').style.display = 'block';
-            document.getElementById('noteTitle').focus();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function cancelEdit() {
-            currentEditId = null;
-            document.getElementById('noteTitle').value = '';
-            document.getElementById('noteContent').value = '';
-            document.getElementById('editor').style.display = 'none';
-        }
-
-        async function exportNotes() {
-            const transaction = db.transaction([STORE_NAME], 'readonly');
-            const store = transaction.objectStore(STORE_NAME);
-            const request = store.getAll();
-
-            request.onsuccess = () => {
-                const notes = request.result;
-                const dataStr = JSON.stringify(notes, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(dataBlob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `notefy-backup-${new Date().toISOString().split('T')[0]}.json`;
-                link.click();
-                URL.revokeObjectURL(url);
-            };
-        }
-
-        async function importNotes(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                try {
-                    const notes = JSON.parse(e.target.result);
-                    
-                    if (!Array.isArray(notes)) {
-                        throw new Error('Ungültiges Format');
-                    }
-
-                    const transaction = db.transaction([STORE_NAME], 'readwrite');
-                    const store = transaction.objectStore(STORE_NAME);
-
-                    for (const note of notes) {
-                        const importNote = {
-                            title: note.title,
-                            content: note.content,
-                            timestamp: note.timestamp || Date.now()
-                        };
-                        await store.add(importNote);
-                    }
-
-                    await loadNotes();
-                    alert(`${notes.length} Notizen erfolgreich importiert!`);
-                } catch (error) {
-                    console.error('Import error:', error);
-                    alert('Fehler beim Importieren der Notizen. Bitte überprüfe das Dateiformat.');
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
-
-        function setupPWA() {
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                document.getElementById('installPrompt').style.display = 'block';
-            });
-
-            window.addEventListener('appinstalled', () => {
-                document.getElementById('installPrompt').style.display = 'none';
-                deferredPrompt = null;
-            });
-        }
-
-        async function installApp() {
-            if (!deferredPrompt) return;
-
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                document.getElementById('installPrompt').style.display = 'none';
-            }
-            
-            deferredPrompt = null;
-        }
-
-        function checkOnlineStatus() {
-            const status = document.getElementById('status');
-            const statusText = document.getElementById('statusText');
-            
-            if (navigator.onLine) {
-                status.classList.remove('offline');
-                statusText.textContent = 'Online - Notizen werden lokal gespeichert';
+            if (tab === 'notes') {
+                document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+                document.getElementById('notesPage').classList.add('active');
             } else {
-                status.classList.add('offline');
-                statusText.textContent = 'Offline - App funktioniert weiterhin';
+                document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+                document.getElementById('settingsPage').classList.add('active');
+                updateNoteCount();
             }
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+        // Settings Functions
+        function loadSettings() {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            const fontSize = localStorage.getItem('fontSize') || '16';
+            const lineHeight = localStorage.getItem('lineHeight') || '1.6';
+            const monospace = localStorage.getItem('monospace') === 'true';
+            const columns = localStorage.getItem('columns') || 'auto';
+            const compact = localStorage.getItem('compact') === 'true';
+            const accentColor = localStorage.getItem('accentColor') || '#6750A4';
+            
+            if (darkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('darkModeToggle').classList.add('active');
+            }
+            
+            document.getElementById('fontSizeRange').value = fontSize;
+            changeFontSize(fontSize);
+            
+            document.getElementById('lineHeightRange').value = lineHeight;
+            changeLineHeight(lineHeight);
+            
+            if (monospace) {
+                document.getElementById('monoToggle').classList.add('active');
+                document.getElementById('noteContent').style.fontFamily = "'Consolas', 'Monaco', monospace";
+            }
 
-        function registerServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-const CACHE_NAME = 'notefy-v1';
-const urlsToCache = [
-    './',
-    './notefy.html',
-    './manifest.json',
-    './notefy-app-icon.png',
-    '../../../css/style.css'
-];
+            document.getElementById('columnsSelect').value = columns;
+            changeColumns(columns);
 
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Cache opened');
-                return cache.addAll(urlsToCache);
-            })
-            .catch((error) => {
-                console.log('Cache error:', error);
-            })
-    );
-    self.skipWaiting();
-});
+            if (compact) {
+                document.getElementById('compactToggle').classList.add('active');
+                document.querySelectorAll('.note-card').forEach(card => {
+                    card.style.minHeight = '150px';
+                });
+            }
 
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-    event.waitUntil(clients.claim());
-});
-
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                if (response) {
-                    return response;
+            document.documentElement.style.setProperty('--primary', accentColor);
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.dataset.primary === accentColor) {
+                    opt.classList.add('active');
                 }
-                return fetch(event.request)
-                    .then((response) => {
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
-                        }
-                        const responseToCache = response.clone();
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
-                        return response;
-                    })
-                    .catch(() => {
-                        return new Response('Offline - Bitte später erneut versuchen', {
-                            status: 503,
-                            statusText: 'Service Unavailable',
-                            headers: new Headers({
-                                'Content-Type': 'text/plain'
-                            })
-                        });
-                    });
-            })
-    );
-});
-                `;
-                
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(blob);
-                
-                navigator.serviceWorker.register(swUrl)
-                    .then((registration) => {
-                        console.log('Service Worker registriert:', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.error('Service Worker Registrierung fehlgeschlagen:', error);
-                    });
-            }
+            });
         }
-    </script>
-</body>
-</html>
+
+        function toggleDarkMode() {
+            const toggle = document.getElementById('darkModeToggle');
+            const isDark = toggle.classList.toggle('active');
+            
+            if (isDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.set
