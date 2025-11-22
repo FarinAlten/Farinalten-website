@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a1a">
+    <title>Notizen - PWA</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTm90aXplbiBBcHAiLCJzaG9ydF9uYW1lIjoiTm90aXplbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWExYTFhIiwidGhlbWVfY29sb3IiOiIjMWExYTFhIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMxYTFhMWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyBmaWxsPSclMjNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyUzRU4lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: rgba(66, 153, 225, 0.3);
+            border-color: rgba(66, 153, 225, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: rgba(66, 153, 225, 0.5);
+        }
+
+        .status {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+
+        .status.offline .status-indicator {
+            background: #ef4444;
+        }
+
+        .note-editor {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #888;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .note-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .note-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .note-title {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .note-content {
+            color: #aaa;
+            font-size: 0.9em;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .note-actions button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .sync-icon {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .install-prompt {
+            background: rgba(66, 153, 225, 0.2);
+            border: 1px solid rgba(66, 153, 225, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .install-prompt button {
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Notizen</h1>
+            <p class="subtitle">Deine persönliche Notizen-App mit Cloud-Sync</p>
+        </header>
+
+        <div id="installPrompt" class="install-prompt" style="display: none;">
+            <p>📱 Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
+            <button onclick="installApp()">Jetzt installieren</button>
+        </div>
+
+        <div class="status" id="status">
+            <span class="status-indicator"></span>
+            <span id="statusText">Offline - nur lokale Speicherung</span>
+        </div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="showEditor()">+ Neue Notiz</button>
+            <button onclick="connectGoogleDrive()" id="gdBtn">Mit Google Drive verbinden</button>
+            <button onclick="syncNotes()" id="syncBtn" disabled>
+                <span id="syncIcon">🔄</span> Synchronisieren
+            </button>
+        </div>
+
+        <div class="note-editor" id="editor" style="display: none;">
+            <h2 style="margin-bottom: 20px;">Notiz bearbeiten</h2>
+            <input type="text" id="noteTitle" placeholder="Titel...">
+            <textarea id="noteContent" placeholder="Deine Notiz hier..."></textarea>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" onclick="saveNote()">Speichern</button>
+                <button onclick="cancelEdit()">Abbrechen</button>
+            </div>
+        </div>
+
+        <div class="notes-grid" id="notesGrid"></div>
+    </div>
+
+    <script>
+        // IndexedDB Setup
+        let db;
+        const DB_NAME = 'NotesDB';
+        const STORE_NAME = 'notes';
+        
+        // Google Drive API
+        let gapi, google;
+        let accessToken = null;
+        const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com'; // Hier Client ID einfügen
+        const API_KEY = 'YOUR_API_KEY'; // Hier API Key einfügen
+        const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
+        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+
+        let currentEditId = null;
+        let deferredPrompt;
+
+        // Init
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        async function initApp() {
+            await initDB();
+            await loadNotes();
+            checkOnlineStatus();
+            setupPWA();
+            
+            // Load Google API
+            loadGoogleAPI();
+            
+            window.addEventListener('online', checkOnlineStatus);
+            window.addEventListener('offline', checkOnlineStatus);
+        }
+
+        // IndexedDB
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve();
+                };
+                
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                        store.createIndex('driveId', 'driveId', { unique: false });
+                    }
+                };
+            });
+        }
+
+        async function saveNote() {
+            const title = document.getElementById('noteTitle').value.trim();
+            const content = document.getElementById('noteContent').value.trim();
+            
+            if (!title || !content) {
+                alert('Bitte Titel und Inhalt eingeben!');
+                return;
+            }
+
+            const note = {
+                title,
+                content,
+                timestamp: Date.now(),
+                synced: false
+            };
+
+            if (currentEditId) {
+                note.id = currentEditId;
+            }
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            if (currentEditId) {
+                await store.put(note);
+            } else {
+                await store.add(note);
+            }
+
+            cancelEdit();
+            await loadNotes();
+            
+            if (accessToken) {
+                syncNotes();
+            }
+        }
+
+        async function loadNotes() {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+
+            request.onsuccess = () => {
+                const notes = request.result;
+                displayNotes(notes);
+            };
+        }
+
+        function displayNotes(notes) {
+            const grid = document.getElementById('notesGrid');
+            
+            if (notes.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #888; grid-column: 1/-1;">Noch keine Notizen vorhanden. Erstelle deine erste Notiz!</p>';
+                return;
+            }
+
+            grid.innerHTML = notes.reverse().map(note => `
+                <div class="note-card" onclick="editNote(${note.id})">
+                    <div class="note-title">${escapeHtml(note.title)}</div>
+                    <div class="note-content">${escapeHtml(note.content)}</div>
+                    <div class="note-meta">
+                        <span>${new Date(note.timestamp).toLocaleDateString('de-DE')}</span>
+                        <div class="note-actions">
+                            <button onclick="deleteNote(event, ${note.id})">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function editNote(id) {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.get(id);
+
+            request.onsuccess = () => {
+                const note = request.result;
+                if (note) {
+                    currentEditId = id;
+                    document.getElementById('noteTitle').value = note.title;
+                    document.getElementById('noteContent').value = note.content;
+                    showEditor();
+                }
+            };
+        }
+
+        async function deleteNote(event, id) {
+            event.stopPropagation();
+            
+            if (!confirm('Notiz wirklich löschen?')) return;
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            await store.delete(id);
+            
+            await loadNotes();
+        }
+
+        function showEditor() {
+            document.getElementById('editor').style.display = 'block';
+            document.getElementById('noteTitle').focus();
+        }
+
+        function cancelEdit() {
+            currentEditId = null;
+            document.getElementById('noteTitle').value = '';
+            document.getElementById('noteContent').value = '';
+            document.getElementById('editor').style.display = 'none';
+        }
+
+        // Google Drive Integration
+        function loadGoogleAPI() {
+            const script = document.createElement('script');
+            script.src = 'https://accounts.google.com/gsi/client';
+            script.async = true;
+            script.defer = true;
+            script.onload = initGoogleAPI;
+            document.head.appendChild(script);
+        }
+
+        function initGoogleAPI() {
+            if (window.google) {
+                // Check if already logged in
+                const savedToken = localStorage.getItem('gdrive_token');
+                if (savedToken) {
+                    accessToken = savedToken;
+                    updateGDriveStatus(true);
+                }
+            }
+        }
+
+        function connectGoogleDrive() {
+            if (accessToken) {
+                // Logout
+                accessToken = null;
+                localStorage.removeItem('gdrive_token');
+                updateGDriveStatus(false);
+                return;
+            }
+
+            // Google OAuth
+            const client = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                callback: (response) => {
+                    if (response.access_token) {
+                        accessToken = response.access_token;
+                        localStorage.setItem('gdrive_token', accessToken);
+                        updateGDriveStatus(true);
+                        syncNotes();
+                    }
+                }
+            });
+            
+            client.requestAccessToken();
+        }
+
+        function updateGDriveStatus(connected) {
+            const btn = document.getElementById('gdBtn');
+            const syncBtn = document.getElementById('syncBtn');
+            const statusText = document.getElementById('statusText');
+            
+            if (connected) {
+                btn.textContent = '✓ Google Drive verbunden';
+                syncBtn.disabled = false;
+                statusText.textContent = 'Online - Synchronisation aktiv';
+                document.getElementById('status').classList.remove('offline');
+            } else {
+                btn.textContent = 'Mit Google Drive verbinden';
+                syncBtn.disabled = true;
+                statusText.textContent = 'Offline - nur lokale Speicherung';
+                document.getElementById('status').classList.add('offline');
+            }
+        }
+
+        async function syncNotes() {
+            if (!accessToken) return;
+
+            const syncIcon = document.getElementById('syncIcon');
+            syncIcon.classList.add('sync-icon');
+            
+            try {
+                // Get all local notes
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+                
+                request.onsuccess = async () => {
+                    const notes = request.result;
+                    
+                    for (const note of notes) {
+                        if (!note.synced) {
+                            await uploadToGDrive(note);
+                        }
+                    }
+                    
+                    syncIcon.classList.remove('sync-icon');
+                };
+            } catch (error) {
+                console.error('Sync error:', error);
+                syncIcon.classList.remove('sync-icon');
+                alert('Synchronisation fehlgeschlagen. Bitte erneut versuchen.');
+            }
+        }
+
+        async function uploadToGDrive(note) {
+            const metadata = {
+                name: `${note.title}.txt`,
+                mimeType: 'text/plain'
+            };
+
+            const form = new FormData();
+            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+            form.append('file', new Blob([note.content], { type: 'text/plain' }));
+
+            const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: form
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                
+                // Update local note with driveId
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                note.driveId = result.id;
+                note.synced = true;
+                await store.put(note);
+            }
+        }
+
+        // PWA Installation
+        function setupPWA() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('installPrompt').style.display = 'block';
+            });
+
+            window.addEventListener('appinstalled', () => {
+                document.getElementById('installPrompt').style.display = 'none';
+                deferredPrompt = null;
+            });
+        }
+
+        async function installApp() {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                document.getElementById('installPrompt').style.display = 'none';
+            }
+            
+            deferredPrompt = null;
+        }
+
+        function checkOnlineStatus() {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            
+            if (navigator.onLine && accessToken) {
+                status.classList.remove('offline');
+                statusText.textContent = 'Online - Synchronisation aktiv';
+            } else if (navigator.onLine) {
+                statusText.textContent = 'Online - nicht mit Drive verbunden';
+            } else {
+                status.classList.add('offline');
+                statusText.textContent = 'Offline - nur lokale Speicherung';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (event) => {
+                    self.skipWaiting();
+                });
+
+                self.addEventListener('activate', (event) => {
+                    event.waitUntil(clients.claim());
+                });
+
+                self.addEventListener('fetch', (event) => {
+                    event.respondWith(
+                        fetch(event.request).catch(() => {
+                            return new Response('Offline', { status: 503 });
+                        })
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl);
+        }
+    </script>
+</body>
+</html>
