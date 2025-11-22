@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a1a">
-    <title>Notizen - PWA</title>
+    <title>Notefy</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Notefy">
+		<link rel="apple-touch-icon" href="../Notefy-app-icon.png">
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTm90aXplbiBBcHAiLCJzaG9ydF9uYW1lIjoiTm90aXplbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWExYTFhIiwidGhlbWVfY29sb3IiOiIjMWExYTFhIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMxYTFhMWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyBmaWxsPSclMjNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyUzRU4lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
     <style>
         * {
@@ -229,28 +233,17 @@
 <body>
     <div class="container">
         <header>
-            <h1>Notizen</h1>
-            <p class="subtitle">Deine persönliche Notizen-App mit Cloud-Sync</p>
+            <h1>Notefy</h1>
+            <p class="subtitle">Deine persönliche Notizen App</p>
         </header>
 
         <div id="installPrompt" class="install-prompt" style="display: none;">
-            <p>📱 Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
+            <p>Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
             <button onclick="installApp()">Jetzt installieren</button>
         </div>
-
-        <div class="status" id="status">
-            <span class="status-indicator"></span>
-            <span id="statusText">Offline - nur lokale Speicherung</span>
-        </div>
-
         <div class="controls">
             <button class="btn-primary" onclick="showEditor()">+ Neue Notiz</button>
-            <button onclick="connectGoogleDrive()" id="gdBtn">Mit Google Drive verbinden</button>
-            <button onclick="syncNotes()" id="syncBtn" disabled>
-                <span id="syncIcon">🔄</span> Synchronisieren
-            </button>
         </div>
-
         <div class="note-editor" id="editor" style="display: none;">
             <h2 style="margin-bottom: 20px;">Notiz bearbeiten</h2>
             <input type="text" id="noteTitle" placeholder="Titel...">
@@ -260,28 +253,12 @@
                 <button onclick="cancelEdit()">Abbrechen</button>
             </div>
         </div>
-
         <div class="notes-grid" id="notesGrid"></div>
     </div>
-
     <script>
-        // IndexedDB Setup
         let db;
         const DB_NAME = 'NotesDB';
         const STORE_NAME = 'notes';
-        
-        // Google Drive API
-        let gapi, google;
-        let accessToken = null;
-        const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com'; // Hier Client ID einfügen
-        const API_KEY = 'YOUR_API_KEY'; // Hier API Key einfügen
-        const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
-        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-
-        let currentEditId = null;
-        let deferredPrompt;
-
-        // Init
         document.addEventListener('DOMContentLoaded', initApp);
 
         async function initApp() {
@@ -290,14 +267,10 @@
             checkOnlineStatus();
             setupPWA();
             
-            // Load Google API
-            loadGoogleAPI();
-            
             window.addEventListener('online', checkOnlineStatus);
             window.addEventListener('offline', checkOnlineStatus);
         }
 
-        // IndexedDB
         function initDB() {
             return new Promise((resolve, reject) => {
                 const request = indexedDB.open(DB_NAME, 1);
@@ -375,7 +348,7 @@
                 return;
             }
 
-            grid.innerHTML = notes.reverse().map(note => `
+            grid.innerHTML = notes.reverse().map(note => 
                 <div class="note-card" onclick="editNote(${note.id})">
                     <div class="note-title">${escapeHtml(note.title)}</div>
                     <div class="note-content">${escapeHtml(note.content)}</div>
@@ -386,7 +359,7 @@
                         </div>
                     </div>
                 </div>
-            `).join('');
+            ).join('');
         }
 
         async function editNote(id) {
@@ -428,72 +401,6 @@
             document.getElementById('noteContent').value = '';
             document.getElementById('editor').style.display = 'none';
         }
-
-        // Google Drive Integration
-        function loadGoogleAPI() {
-            const script = document.createElement('script');
-            script.src = 'https://accounts.google.com/gsi/client';
-            script.async = true;
-            script.defer = true;
-            script.onload = initGoogleAPI;
-            document.head.appendChild(script);
-        }
-
-        function initGoogleAPI() {
-            if (window.google) {
-                // Check if already logged in
-                const savedToken = localStorage.getItem('gdrive_token');
-                if (savedToken) {
-                    accessToken = savedToken;
-                    updateGDriveStatus(true);
-                }
-            }
-        }
-
-        function connectGoogleDrive() {
-            if (accessToken) {
-                // Logout
-                accessToken = null;
-                localStorage.removeItem('gdrive_token');
-                updateGDriveStatus(false);
-                return;
-            }
-
-            // Google OAuth
-            const client = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: SCOPES,
-                callback: (response) => {
-                    if (response.access_token) {
-                        accessToken = response.access_token;
-                        localStorage.setItem('gdrive_token', accessToken);
-                        updateGDriveStatus(true);
-                        syncNotes();
-                    }
-                }
-            });
-            
-            client.requestAccessToken();
-        }
-
-        function updateGDriveStatus(connected) {
-            const btn = document.getElementById('gdBtn');
-            const syncBtn = document.getElementById('syncBtn');
-            const statusText = document.getElementById('statusText');
-            
-            if (connected) {
-                btn.textContent = '✓ Google Drive verbunden';
-                syncBtn.disabled = false;
-                statusText.textContent = 'Online - Synchronisation aktiv';
-                document.getElementById('status').classList.remove('offline');
-            } else {
-                btn.textContent = 'Mit Google Drive verbinden';
-                syncBtn.disabled = true;
-                statusText.textContent = 'Offline - nur lokale Speicherung';
-                document.getElementById('status').classList.add('offline');
-            }
-        }
-
         async function syncNotes() {
             if (!accessToken) return;
 
@@ -501,7 +408,7 @@
             syncIcon.classList.add('sync-icon');
             
             try {
-                // Get all local notes
+                
                 const transaction = db.transaction([STORE_NAME], 'readonly');
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.getAll();
@@ -544,8 +451,7 @@
 
             if (response.ok) {
                 const result = await response.json();
-                
-                // Update local note with driveId
+        
                 const transaction = db.transaction([STORE_NAME], 'readwrite');
                 const store = transaction.objectStore(STORE_NAME);
                 note.driveId = result.id;
@@ -554,7 +460,6 @@
             }
         }
 
-        // PWA Installation
         function setupPWA() {
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
@@ -602,9 +507,8 @@
             return div.innerHTML;
         }
 
-        // Service Worker Registration
         if ('serviceWorker' in navigator) {
-            const swCode = `
+            const swCode = 
                 self.addEventListener('install', (event) => {
                     self.skipWaiting();
                 });
@@ -620,7 +524,7 @@
                         })
                     );
                 });
-            `;
+            ;
             
             const blob = new Blob([swCode], { type: 'application/javascript' });
             const swUrl = URL.createObjectURL(blob);
