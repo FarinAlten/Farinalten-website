@@ -1,20 +1,28 @@
 {
     "name": "Notefy",
     "short_name": "Notefy",
-    "start_url": ".",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#1a1a1a",
     "theme_color": "#1a1a1a",
     "icons": [
       {
-        "src": "/notefy-app-icon.png",
+        "src": "notefy-app-icon.png",
         "sizes": "192x192",
-        "type": "image/png"
+        "type": "image/png",
+        "purpose": "any maskable"
       },
       {
-        "src": "/notefy-app-icon.png",
+        "src": "notefy-app-icon.png",
         "sizes": "512x512",
-        "type": "image/png"
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "notefy-app-icon.png",
+        "sizes": "1024x1024",
+        "type": "image/png",
+        "purpose": "any maskable"
       }
     ]
-  }
+}
