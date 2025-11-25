@@ -1,4 +1,4 @@
-self.addEventListener('install', function (e) {
+    self.addEventListener('install', function (e) {
     console.log('Service Worker installiert');
     e.waitUntil(
         caches.open('Web Calculator').then(function (cache) {
