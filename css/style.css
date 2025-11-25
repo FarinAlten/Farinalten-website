@@ -64,7 +64,6 @@ nav {
   margin: 0 1px;
 }
 
-/* --- Navigation Links --- */
 .nav-link {
   padding: 8px 17px;
   border-radius: 9px;
@@ -202,8 +201,48 @@ footer a:hover {
 ::-webkit-scrollbar { width: 8px; background: var(--primary-bg);}
 ::-webkit-scrollbar-thumb { background: var(--border-ui); border-radius: 6px;}
 
-@media (max-width: 1050px) {
-  nav, .headerbox, .content, footer { max-width: 99vw; }
-  .gallery { flex-direction: column; gap: 18px; }
-  .Box { min-width: unset; }
+/* In deiner css/style.css Datei, füge diese Media Queries hinzu: */
+
+/* Standard Desktop - aktuell 112x112px */
+.project-box .gallery-img {
+    width: 112px;
+    height: 112px;
+    min-width: 80px;
+    max-width: 160px;
+    /* ... rest bleibt gleich */
+}
+
+/* Tablets und kleinere Desktops */
+@media (max-width: 1024px) {
+    .project-box .gallery-img {
+        width: 96px;
+        height: 96px;
+        min-width: 72px;
+        max-width: 120px;
+    }
+}
+
+/* Tablets Portrait */
+@media (max-width: 768px) {
+    .project-box .gallery-img {
+        width: 80px;
+        height: 80px;
+        min-width: 64px;
+        max-width: 96px;
+    }
+}
+
+/* Mobile Geräte */
+@media (max-width: 480px) {
+    .project-box .gallery-img {
+        width: 64px;
+        height: 64px;
+        min-width: 56px;
+        max-width: 80px;
+    }
+    
+    .project-box {
+        padding: 12px 14px;
+        gap: 14px;
+    }
 }
