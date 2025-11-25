@@ -17,7 +17,6 @@ nav {
     width: 96%;
     left: 2%;
     right: auto;
-    /* horizontal scroll only */
     overflow-x: auto;
     overflow-y: hidden;
     top: 0;
@@ -94,7 +93,7 @@ nav {
     -webkit-backdrop-filter: blur(18px) saturate(180%);
     box-shadow: 0 8px 32px rgba(0,0,0,0.18);
     border: 1px solid rgba(255,255,255,0.18);
-    grid-column: 1 / -1; /* bleibt horizontal, volle Breite */
+    grid-column: 1 / -1; 
 }
 
 .headerbox .title { 
@@ -182,14 +181,13 @@ nav {
 .Box .gallery-img {
     width: 100%;
     height: 170px;
-    aspect-ratio: 16 / 9; /* Seitenverhältnis, z.B. 16:9 */
-    object-fit: contain;   /* Bild immer ganz anzeigen, ggf. mit Rand */
+    aspect-ratio: 16 / 9; 
+    object-fit: contain;  
     border-top-left-radius: 28px;
     border-top-right-radius: 28px;
     background: #e0e0e0;
     display: block;
     margin-bottom: 12px;
-    /* Optional: Bild mittig ausrichten */
     object-position: center center;
 }
 
@@ -264,7 +262,6 @@ footer a:hover {
     text-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
-/* Dark Mode: Display */
 @media (prefers-color-scheme: dark) {
     #display {
         background: rgba(30,32,40,0.75);
@@ -408,7 +405,6 @@ button.zero {
     grid-column: span 2;
 }
 
-/* Calculator Button Grid: Optimierte Anordnung für Desktop */
 .buttons {
     display: grid;
     grid-template-areas:
@@ -425,8 +421,8 @@ button.zero {
 
 button.clear { grid-area: clear; }
 button.delete { grid-area: delete; }
-button:nth-child(3) { grid-area: divide; }    /* ÷ */
-button:nth-child(4) { grid-area: multiply; }  /* × */
+button:nth-child(3) { grid-area: divide; }    
+button:nth-child(4) { grid-area: multiply; }  
 button:nth-child(5) { grid-area: seven; }
 button:nth-child(6) { grid-area: eight; }
 button:nth-child(7) { grid-area: nine; }
@@ -442,7 +438,6 @@ button.calculate { grid-area: equal; }
 button.zero { grid-area: zero; }
 button:nth-child(18) { grid-area: dot; }
 
-/* Scientific Buttons: Automatische Zeilen */
 .scientific-buttons {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
@@ -451,7 +446,6 @@ button:nth-child(18) { grid-area: dot; }
     width: 100%;
 }
 
-/* Responsive Anpassung */
 @media (max-width: 900px) {
     .buttons {
         grid-template-areas:
@@ -595,7 +589,6 @@ button:nth-child(18) { grid-area: dot; }
     }
 }
 
-/* Dark Mode erzwingen: exakt wie @media (prefers-color-scheme: dark) */
 [data-theme="dark"] body {
     background-color: black !important;
     color: white !important;
@@ -722,7 +715,6 @@ button:nth-child(18) { grid-area: dot; }
     color: #fff !important;
 }
 
-/* Responsive: Auf kleinen Geräten volle Breite */
 @media (max-width: 700px) {
     nav {
         width: 100%;
@@ -733,7 +725,6 @@ button:nth-child(18) { grid-area: dot; }
     }
 }
 
-/* --- Projekte: Bild links, Text rechts --- */
 .project-gallery {
     display: flex;
     flex-direction: column;
@@ -746,10 +737,9 @@ button:nth-child(18) { grid-area: dot; }
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* an Header / Nav angelehntes, aber dezentes Hintergrund-Gradient */
     background: linear-gradient(120deg, #f8fafc 80%, #e9f2fb 100%);
     color: #222;
-    border: 1px solid rgba(25,118,210,0.06); /* leichter Akzent-Rand in Blau */
+    border: 1px solid rgba(25,118,210,0.06); 
     border-radius: 20px;
     box-shadow: 0 12px 36px rgba(2,6,23,0.06);
     cursor: pointer;
@@ -764,10 +754,8 @@ button:nth-child(18) { grid-area: dot; }
 .project-box:hover {
     transform: translateY(-6px);
     box-shadow: 0 22px 48px rgba(2,6,23,0.10);
-    background: linear-gradient(120deg, #eef6ff 60%, #e6f1fb 100%); /* dezente Hover-Hellblau */
-}
+    background: linear-gradient(120deg, #eef6ff 60%, #e6f1fb 100%); }
 
-/* App-store style icon on the left (square, use 1024x1024 sources scaled down) */
 .project-box .gallery-img {
     width: 112px;
     height: 112px;
@@ -776,7 +764,6 @@ button:nth-child(18) { grid-area: dot; }
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 12px;
-    /* Icon-Hintergrund leicht ins Blaue gezogen, passend zu Links/Legal */
     background: linear-gradient(135deg,#ffffff,#eef7ff);
     display: block;
     margin: 0;
@@ -785,7 +772,6 @@ button:nth-child(18) { grid-area: dot; }
     border: 1px solid rgba(25,118,210,0.06);
 }
 
-/* Text content to the right of the icon */
 .project-box-content {
     display: flex;
     flex-direction: column;
@@ -799,7 +785,6 @@ button:nth-child(18) { grid-area: dot; }
     margin: 0 0 6px 0;
     font-size: 1.25em;
     font-weight: 800;
-    /* Titel-Akzent passend zu Nav-Link-Farbe */
     color: #1976d2;
     text-align: left;
     line-height: 1.2;
@@ -811,7 +796,7 @@ button:nth-child(18) { grid-area: dot; }
 .project-box .subtitle {
     margin: 0;
     font-size: 0.98em;
-    color: #455a64; /* etwas dunkleres, dezentes Graublau */
+    color: #455a64; 
     text-align: left;
     line-height: 1.4;
     display: -webkit-box;
@@ -821,7 +806,6 @@ button:nth-child(18) { grid-area: dot; }
     overflow: hidden;
 }
 
-/* Dark Mode: angepasste Farben für gleiche Akzente */
 @media (prefers-color-scheme: dark) {
     .project-box {
         background: linear-gradient(120deg, #1e2630 60%, #182126 100%);
@@ -838,14 +822,13 @@ button:nth-child(18) { grid-area: dot; }
         border: 1px solid rgba(255,255,255,0.03);
     }
     .project-box .title {
-        color: #90caf9; /* helles Blau im Dark Mode */
+        color: #90caf9;
     }
     .project-box .subtitle {
         color: #cfd8dc;
     }
 }
 
-/* Dark Mode erzwingen via data-theme */
 [data-theme="dark"] .project-box {
     background: linear-gradient(120deg, #1e2630 60%, #182126 100%) !important;
     border: 1px solid rgba(25,118,210,0.09) !important;
@@ -859,8 +842,6 @@ button:nth-child(18) { grid-area: dot; }
 [data-theme="dark"] .project-box .subtitle {
     color: #cfd8dc !important;
 }
-
-/* Headerbox: Logo links, Text rechts (Gallery-ähnlich) */
 .headerbox-row {
     display: flex;
     align-items: center;
@@ -891,7 +872,6 @@ button:nth-child(18) { grid-area: dot; }
     line-height: 1.5;
 }
 
-/* Mobile: Logo über dem Text (wie vorher) */
 @media (max-width: 700px) {
     .headerbox-row {
         flex-direction: column;
