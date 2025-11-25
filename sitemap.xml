@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-		<!--	created with www.mysitemapgenerator.com	-->
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 	<loc>https://farinalten.com/</loc>
@@ -14,7 +13,7 @@
 <url>
 	<loc>https://farinalten.com/websites/projects</loc>
 	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
-	<priority>0.8</priority>
+	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://farinalten.com/websites/contact</loc>
@@ -24,7 +23,7 @@
 <url>
 	<loc>https://farinalten.com/websites/blog</loc>
 	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
-	<priority>0.8</priority>
+	<priority>1.0</priority>
 </url>
 <url>
 	<loc>https://farinalten.com/websites/legal</loc>
@@ -39,6 +38,6 @@
 <url>
 	<loc>https://farinalten.com/websites/settings</loc>
 	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
-	<priority>0.8</priority>
+	<priority>0.1</priority>
 </url>
 </urlset>
