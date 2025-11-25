@@ -201,18 +201,13 @@ footer a:hover {
 ::-webkit-scrollbar { width: 8px; background: var(--primary-bg);}
 ::-webkit-scrollbar-thumb { background: var(--border-ui); border-radius: 6px;}
 
-/* In deiner css/style.css Datei, füge diese Media Queries hinzu: */
-
-/* Standard Desktop - aktuell 112x112px */
 .project-box .gallery-img {
     width: 112px;
     height: 112px;
     min-width: 80px;
     max-width: 160px;
-    /* ... rest bleibt gleich */
 }
 
-/* Tablets und kleinere Desktops */
 @media (max-width: 1024px) {
     .project-box .gallery-img {
         width: 96px;
@@ -222,7 +217,7 @@ footer a:hover {
     }
 }
 
-/* Tablets Portrait */
+
 @media (max-width: 768px) {
     .project-box .gallery-img {
         width: 80px;
@@ -232,7 +227,7 @@ footer a:hover {
     }
 }
 
-/* Mobile Geräte */
+
 @media (max-width: 480px) {
     .project-box .gallery-img {
         width: 64px;
