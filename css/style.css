@@ -71,6 +71,7 @@ nav {
     color: #1976d2;
     box-shadow: 0 4px 16px rgba(0,0,0,0.10);
     text-decoration: none;
+    transform: translateY(-8px) scale(1.04);
 }
 .headerbox {
     text-align: left;
