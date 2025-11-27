@@ -94,29 +94,23 @@
 function clearDisplay() {
     document.getElementById('display').value = '';
 }
-
 function deleteLast() {
     let display = document.getElementById('display').value;
     document.getElementById('display').value = display.slice(0, -1);
 }
-
 function appendToDisplay(value) {
     document.getElementById('display').value += value;
 }
-
 function calculate() {
     let display = document.getElementById('display').value;
     try {
-        // Prozent-Operator ersetzen
         display = display.replace(/(\d+(\.\d+)?)%/g, '($1/100)');
-        // eslint-disable-next-line no-eval
         let result = eval(display);
         document.getElementById('display').value = result;
     } catch (e) {
         document.getElementById('display').value = 'Error';
     }
 }
-
 function toggleMode() {
     const sci = document.getElementById('scientific-buttons');
     const btn = document.getElementById('mode-toggle');
@@ -130,10 +124,7 @@ function toggleMode() {
         btn.textContent = "Scientific Mode";
     }
 }
-
-// Tastatur-Support
 document.addEventListener('keydown', function(e) {
-    // Wenn ein Eingabefeld (außer unser Display) fokussiert ist, abbrechen
     if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== 'display') return;
 
     const allowed = '0123456789.+-*/()%^';
@@ -152,8 +143,6 @@ document.addEventListener('keydown', function(e) {
         highlightButton('C');
     }
 });
-
-// Optional: Button-Highlight für besseres Feedback
 function highlightButton(key) {
     let btn = null;
     if (key === 'Enter' || key === '=') btn = document.querySelector('.calculate');
@@ -170,7 +159,6 @@ function highlightButton(key) {
         setTimeout(() => btn.classList.remove('active-key'), 120);
     }
 }
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
