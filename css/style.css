@@ -40,7 +40,6 @@ nav {
     flex-wrap: nowrap;
     overflow-y: auto;
     gap: 8px;
-    margin-right: 100px;
 }
 .nav-item {
     flex: 0 0 auto;
