@@ -12,7 +12,7 @@ nav {
     border: none;
     color: #222;
     position: fixed;
-    width: 96%;
+    width: 100%;
     right: auto;
     overflow-x: auto;
     overflow-y: hidden;
@@ -21,7 +21,6 @@ nav {
     height: 75px;
     display: flex;
     align-items: center;
-    padding: 0 32px;
     margin-bottom: 0;
 }
 .nav-logo {
@@ -29,6 +28,7 @@ nav {
     font-weight: 800;
     color: #222;
     margin-right: 5px;
+    margin-left: 8px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     background: linear-gradient(120deg, #e0e7ef 60%, #f8fafc 100%);
