@@ -6,11 +6,6 @@ body {
     margin-top: 40px;
 }
 nav {
-    background: linear-gradient(120deg, #f8fafc 80%, #e0e7ef 100%);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    border-radius: 0 0 28px 28px;
-    border: none;
-    color: #222;
     position: fixed;
     width: 100%;
     right: auto;
