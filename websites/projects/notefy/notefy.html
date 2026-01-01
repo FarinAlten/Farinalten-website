@@ -5,474 +5,532 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a1a">
     <title>Notefy</title>
-    <meta name="description" content="Deine persönliche Notizen App">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Notefy">
-    <link rel="apple-touch-icon" href="notefy-app-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="notefy-app-icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="notefy-app-icon.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="notefy-app-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="notefy-app-icon.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="notefy-app-icon.png">
-    <link rel="manifest" href="manifest.json">
-    <!-- Use central designer stylesheet -->
-    <link rel="stylesheet" href="../../../css/style.css">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Notefy">
+		<link rel="apple-touch-icon" href="../Notefy-app-icon.png">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTm90aXplbiBBcHAiLCJzaG9ydF9uYW1lIjoiTm90aXplbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWExYTFhIiwidGhlbWVfY29sb3IiOiIjMWExYTFhIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMxYTFhMWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyBmaWxsPSclMjNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyUzRU4lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: rgba(66, 153, 225, 0.3);
+            border-color: rgba(66, 153, 225, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: rgba(66, 153, 225, 0.5);
+        }
+
+        .status {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+
+        .status.offline .status-indicator {
+            background: #ef4444;
+        }
+
+        .note-editor {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #888;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .note-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .note-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .note-title {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .note-content {
+            color: #aaa;
+            font-size: 0.9em;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .note-actions button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .sync-icon {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .install-prompt {
+            background: rgba(66, 153, 225, 0.2);
+            border: 1px solid rgba(66, 153, 225, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .install-prompt button {
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Notefy</h1>
-            <p class="subtitle">Deine persönliche Notizen-App mit Style</p>
+            <p class="subtitle">Deine persönliche Notizen App</p>
         </header>
 
-        <div id="installPrompt" class="install-prompt glass-card" style="display: none;">
-            <p style="margin-bottom: 16px;">📱 Installiere Notefy als App für schnellen Zugriff!</p>
+        <div id="installPrompt" class="install-prompt" style="display: none;">
+            <p>Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
             <button onclick="installApp()">Jetzt installieren</button>
         </div>
-
-        <div class="status" id="status">
-            <span class="status-indicator"></span>
-            <span id="statusText">Online - Bereit zum Notieren</span>
+        <div class="controls">
+            <button class="btn-primary" onclick="showEditor()">+ Neue Notiz</button>
         </div>
-
-        <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('notes')">📝 Notizen</button>
-            <button class="tab-btn" onclick="switchTab('settings')">⚙️ Einstellungen</button>
-        </nav>
-
-        <!-- Notizen Page -->
-        <div id="notesPage" class="page-view active">
-            <div class="controls">
-                <button onclick="showEditor()">✏️ Neue Notiz</button>
-                <button class="btn-secondary" onclick="exportNotes()">📤 Exportieren</button>
-                <button class="btn-secondary" onclick="document.getElementById('importFile').click()">📥 Importieren</button>
-                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importNotes(event)">
-            </div>
-
-            <div class="glass-card" id="editor" style="display: none; margin-bottom: 24px;">
-                <h2 style="margin-bottom: 20px; color: var(--primary);">Notiz bearbeiten</h2>
-                <input type="text" id="noteTitle" placeholder="Titel deiner Notiz...">
-                <textarea id="noteContent" placeholder="Schreibe deine Gedanken hier nieder..."></textarea>
-                <div style="display: flex; gap: 12px;">
-                    <button onclick="saveNote()">💾 Speichern</button>
-                    <button class="btn-secondary" onclick="cancelEdit()">✖️ Abbrechen</button>
-                </div>
-            </div>
-
-            <div class="notes-grid" id="notesGrid"></div>
-        </div>
-
-        <!-- Einstellungen Page -->
-        <div id="settingsPage" class="page-view">
-            <div class="glass-card settings-section">
-                <h3>🎨 Darstellung</h3>
-                
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Dark Mode</h4>
-                        <p>Dunkles Design für deine Augen</p>
-                    </div>
-                    <div class="toggle" id="darkModeToggle" onclick="toggleDarkMode()"></div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Akzentfarbe</h4>
-                        <p>Wähle deine Lieblingsfarbe</p>
-                    </div>
-                </div>
-                <div class="color-options">
-                    <div class="color-option active" data-primary="#6750A4" style="background: linear-gradient(135deg, #6750A4, #9980D1);" onclick="changeAccentColor(this)"></div>
-                    <div class="color-option" data-primary="#B00020" style="background: linear-gradient(135deg, #B00020, #FF5252);" onclick="changeAccentColor(this)"></div>
-                    <div class="color-option" data-primary="#018786" style="background: linear-gradient(135deg, #018786, #4DB6AC);" onclick="changeAccentColor(this)"></div>
-                    <div class="color-option" data-primary="#6200EE" style="background: linear-gradient(135deg, #6200EE, #9D46FF);" onclick="changeAccentColor(this)"></div>
-                    <div class="color-option" data-primary="#FF6F00" style="background: linear-gradient(135deg, #FF6F00, #FFB300);" onclick="changeAccentColor(this)"></div>
-                    <div class="color-option" data-primary="#2E7D32" style="background: linear-gradient(135deg, #2E7D32, #66BB6A);" onclick="changeAccentColor(this)"></div>
-                </div>
-            </div>
-
-            <div class="glass-card settings-section">
-                <h3>✍️ Editor</h3>
-                
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Schriftgröße</h4>
-                        <p id="fontSizeLabel">16px</p>
-                    </div>
-                </div>
-                <input type="range" id="fontSizeRange" min="12" max="24" value="16" step="1" oninput="changeFontSize(this.value)">
-
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Monospace-Font</h4>
-                        <p>Code-Schriftart für Notizen</p>
-                    </div>
-                    <div class="toggle" id="monoToggle" onclick="toggleMonospace()"></div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Zeilenhöhe</h4>
-                        <p id="lineHeightLabel">1.6</p>
-                    </div>
-                </div>
-                <input type="range" id="lineHeightRange" min="1.2" max="2.4" value="1.6" step="0.2" oninput="changeLineHeight(this.value)">
-            </div>
-
-            <div class="glass-card settings-section">
-                <h3>📊 Notizen-Ansicht</h3>
-                
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Spaltenanzahl</h4>
-                        <p id="columnsLabel">Automatisch</p>
-                    </div>
-                </div>
-                <select id="columnsSelect" onchange="changeColumns(this.value)">
-                    <option value="auto">Automatisch</option>
-                    <option value="1">1 Spalte</option>
-                    <option value="2">2 Spalten</option>
-                    <option value="3">3 Spalten</option>
-                    <option value="4">4 Spalten</option>
-                </select>
-
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Kompakte Ansicht</h4>
-                        <p>Kleinere Karten für mehr Übersicht</p>
-                    </div>
-                    <div class="toggle" id="compactToggle" onclick="toggleCompactView()"></div>
-                </div>
-            </div>
-
-            <div class="glass-card settings-section">
-                <h3>💾 Daten</h3>
-                
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Gespeicherte Notizen</h4>
-                        <p id="noteCount">0 Notizen</p>
-                    </div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Alle Notizen löschen</h4>
-                        <p>Unwiderruflich alle Notizen entfernen</p>
-                    </div>
-                    <button class="btn-secondary" onclick="clearAllNotes()" style="width: auto;">🗑️ Alle löschen</button>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-label">
-                        <h4>Einstellungen zurücksetzen</h4>
-                        <p>Auf Standardeinstellungen zurücksetzen</p>
-                    </div>
-                    <button class="btn-secondary" onclick="resetSettings()" style="width: auto;">🔄 Zurücksetzen</button>
-                </div>
-            </div>
-
-            <div class="glass-card" style="text-align: center;">
-                <p style="color: var(--on-surface-variant); margin-bottom: 8px;">Notefy v1.0</p>
-                <p style="color: var(--on-surface-variant); font-size: 0.85em;">Made with 💜 by Farin</p>
+        <div class="note-editor" id="editor" style="display: none;">
+            <h2 style="margin-bottom: 20px;">Notiz bearbeiten</h2>
+            <input type="text" id="noteTitle" placeholder="Titel...">
+            <textarea id="noteContent" placeholder="Deine Notiz hier..."></textarea>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" onclick="saveNote()">Speichern</button>
+                <button onclick="cancelEdit()">Abbrechen</button>
             </div>
         </div>
+        <div class="notes-grid" id="notesGrid"></div>
     </div>
-
     <script>
-        window.alert("This site is currently broken due to some bugs. It will be fixed soon!");
-const STORAGE_KEY = 'notefy_notes';
-let currentEditId = null;
-let deferredPrompt = null;
+        let db;
+        const DB_NAME = 'NotesDB';
+        const STORE_NAME = 'notes';
+        document.addEventListener('DOMContentLoaded', initApp);
 
-document.addEventListener('DOMContentLoaded', initApp);
-
-function initApp() {
-    loadNotes();
-    loadSettings();
-    setupPWA();
-    registerServiceWorker();
-    checkOnlineStatus();
-    updateNoteCount();
-    window.addEventListener('online', checkOnlineStatus);
-    window.addEventListener('offline', checkOnlineStatus);
-}
-
-function switchTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
-    if (tab === 'notes') {
-        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-        document.getElementById('notesPage').classList.add('active');
-    } else {
-        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-        document.getElementById('settingsPage').classList.add('active');
-        updateNoteCount();
-    }
-}
-
-function loadNotes() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const notes = raw ? JSON.parse(raw) : [];
-    renderNotes(notes);
-}
-
-function saveToStorage(notes) { localStorage.setItem(STORAGE_KEY, JSON.stringify(notes)); }
-
-function renderNotes(notes) {
-    const grid = document.getElementById('notesGrid');
-    grid.innerHTML = '';
-    if (!notes.length) {
-        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🗒️</div><div>Keine Notizen. Erstelle eine neue Notiz.</div></div>';
-        return;
-    }
-    notes.slice().reverse().forEach(note => {
-        const card = document.createElement('div');
-        card.className = 'note-card glass-card';
-        card.innerHTML = `
-            <div class="note-title">${escapeHtml(note.title || 'Ohne Titel')}</div>
-            <div class="note-content">${escapeHtml(note.content || '')}</div>
-            <div class="note-meta">
-                <div>${new Date(note.updatedAt || note.createdAt).toLocaleString()}</div>
-                <div class="note-actions">
-                    <button onclick="editNote('${note.id}')">✏️</button>
-                    <button onclick="deleteNote('${note.id}')">🗑️</button>
-                </div>
-            </div>`;
-        grid.appendChild(card);
-    });
-}
-
-function showEditor(id) {
-    currentEditId = id || null;
-    document.getElementById('editor').style.display = 'block';
-    if (id) {
-        const notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        const n = notes.find(x => x.id === id);
-        if (n) {
-            document.getElementById('noteTitle').value = n.title;
-            document.getElementById('noteContent').value = n.content;
+        async function initApp() {
+            await initDB();
+            await loadNotes();
+            checkOnlineStatus();
+            setupPWA();
+            
+            window.addEventListener('online', checkOnlineStatus);
+            window.addEventListener('offline', checkOnlineStatus);
         }
-    } else {
-        document.getElementById('noteTitle').value = '';
-        document.getElementById('noteContent').value = '';
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 
-function cancelEdit() {
-    document.getElementById('editor').style.display = 'none';
-    currentEditId = null;
-}
-
-function saveNote() {
-    const title = document.getElementById('noteTitle').value.trim();
-    const content = document.getElementById('noteContent').value.trim();
-    if (!title && !content) { alert('Bitte Titel oder Inhalt eingeben.'); return; }
-    const notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    if (currentEditId) {
-        const idx = notes.findIndex(n => n.id === currentEditId);
-        if (idx >= 0) {
-            notes[idx].title = title;
-            notes[idx].content = content;
-            notes[idx].updatedAt = Date.now();
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve();
+                };
+                
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                        store.createIndex('driveId', 'driveId', { unique: false });
+                    }
+                };
+            });
         }
-    } else {
-        notes.push({ id: 'n' + Date.now(), title, content, createdAt: Date.now(), updatedAt: Date.now() });
-    }
-    saveToStorage(notes);
-    loadNotes();
-    updateNoteCount();
-    cancelEdit();
-}
 
-function editNote(id) { showEditor(id); }
-
-function deleteNote(id) {
-    if (!confirm('Notiz wirklich löschen?')) return;
-    let notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    notes = notes.filter(n => n.id !== id);
-    saveToStorage(notes);
-    loadNotes();
-    updateNoteCount();
-}
-
-function exportNotes() {
-    const data = localStorage.getItem(STORAGE_KEY) || '[]';
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'notefy-notes.json';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-}
-
-function importNotes(e) {
-    const f = e.target.files[0];
-    if (!f) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-        try {
-            const parsed = JSON.parse(reader.result);
-            if (!Array.isArray(parsed)) throw new Error('Ungültiges Format');
-            if (confirm('Import ersetzt aktuelle Notizen. Fortfahren?')) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-                loadNotes();
-                updateNoteCount();
-                alert('Import erfolgreich');
+        async function saveNote() {
+            const title = document.getElementById('noteTitle').value.trim();
+            const content = document.getElementById('noteContent').value.trim();
+            
+            if (!title || !content) {
+                alert('Bitte Titel und Inhalt eingeben!');
+                return;
             }
-        } catch (err) {
-            alert('Import fehlgeschlagen: ' + err.message);
+
+            const note = {
+                title,
+                content,
+                timestamp: Date.now(),
+                synced: false
+            };
+
+            if (currentEditId) {
+                note.id = currentEditId;
+            }
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            if (currentEditId) {
+                await store.put(note);
+            } else {
+                await store.add(note);
+            }
+
+            cancelEdit();
+            await loadNotes();
+            
+            if (accessToken) {
+                syncNotes();
+            }
         }
-    };
-    reader.readAsText(f);
-    e.target.value = '';
-}
 
-function changeAccentColor(el) {
-    const color = el.dataset.primary;
-    document.documentElement.style.setProperty('--primary', color);
-    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-    el.classList.add('active');
-    localStorage.setItem('accentColor', color);
-}
+        async function loadNotes() {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
 
-function changeFontSize(v) {
-    document.body.style.fontSize = v + 'px';
-    document.getElementById('fontSizeLabel').textContent = v + 'px';
-    localStorage.setItem('fontSize', v);
-}
-
-function changeLineHeight(v) {
-    document.querySelectorAll('.note-content, textarea, body').forEach(el => el.style.lineHeight = v);
-    document.getElementById('lineHeightLabel').textContent = v;
-    localStorage.setItem('lineHeight', v);
-}
-
-function toggleMonospace() {
-    const t = document.getElementById('monoToggle');
-    const active = t.classList.toggle('active');
-    document.querySelectorAll('.note-content, textarea, input[type="text"]').forEach(el => el.style.fontFamily = active ? "'Menlo', 'Consolas', monospace" : 'inherit');
-    localStorage.setItem('monospace', active);
-}
-
-function changeColumns(v) {
-    const grid = document.getElementById('notesGrid');
-    if (v === 'auto') {
-        grid.style.gridTemplateColumns = '';
-        document.getElementById('columnsLabel').textContent = 'Automatisch';
-    } else {
-        grid.style.gridTemplateColumns = `repeat(${v},1fr)`;
-        document.getElementById('columnsLabel').textContent = v + ' Spalten';
-    }
-    localStorage.setItem('columns', v);
-}
-
-function toggleCompactView() {
-    const t = document.getElementById('compactToggle');
-    const active = t.classList.toggle('active');
-    document.querySelectorAll('.note-card').forEach(card => card.style.minHeight = active ? '120px' : '200px');
-    localStorage.setItem('compact', active);
-}
-
-function clearAllNotes() {
-    if (!confirm('Alle Notizen unwiderruflich löschen?')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    loadNotes();
-    updateNoteCount();
-}
-
-function resetSettings() {
-    if (!confirm('Einstellungen zurücksetzen?')) return;
-    ['darkMode','fontSize','lineHeight','monospace','columns','compact','accentColor'].forEach(k => localStorage.removeItem(k));
-    location.reload();
-}
-
-function updateNoteCount() {
-    const notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    document.getElementById('noteCount').textContent = notes.length + ' Notizen';
-}
-
-function setupPWA() {
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        const el = document.getElementById('installPrompt');
-        if (el) el.style.display = 'block';
-    });
-}
-
-async function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        try {
-            await navigator.serviceWorker.register('service-worker.js');
-        } catch (e) {
-            console.warn('SW registration failed', e);
+            request.onsuccess = () => {
+                const notes = request.result;
+                displayNotes(notes);
+            };
         }
-    }
-}
 
-function checkOnlineStatus() {
-    const s = document.getElementById('status');
-    const txt = document.getElementById('statusText');
-    if (navigator.onLine) {
-        s.classList.remove('offline');
-        txt.textContent = 'Online - Bereit zum Notieren';
-    } else {
-        s.classList.add('offline');
-        txt.textContent = 'Offline - Änderungen werden lokal gespeichert';
-    }
-}
+        function displayNotes(notes) {
+            const grid = document.getElementById('notesGrid');
+            
+            if (notes.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #888; grid-column: 1/-1;">Noch keine Notizen vorhanden. Erstelle deine erste Notiz!</p>';
+                return;
+            }
 
-function installApp() {
-    if (!deferredPrompt) { alert('Installation nicht verfügbar'); return; }
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-        const el = document.getElementById('installPrompt');
-        if (el) el.style.display = 'none';
-    });
-}
+            grid.innerHTML = notes.reverse().map(note => 
+                <div class="note-card" onclick="editNote(${note.id})">
+                    <div class="note-title">${escapeHtml(note.title)}</div>
+                    <div class="note-content">${escapeHtml(note.content)}</div>
+                    <div class="note-meta">
+                        <span>${new Date(note.timestamp).toLocaleDateString('de-DE')}</span>
+                        <div class="note-actions">
+                            <button onclick="deleteNote(event, ${note.id})">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            ).join('');
+        }
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+        async function editNote(id) {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.get(id);
 
-// expose functions for inline handlers
-window.showEditor = showEditor;
-window.saveNote = saveNote;
-window.cancelEdit = cancelEdit;
-window.exportNotes = exportNotes;
-window.importNotes = importNotes;
-window.changeAccentColor = el => changeAccentColor(el);
-window.changeFontSize = changeFontSize;
-window.changeLineHeight = changeLineHeight;
-window.toggleMonospace = toggleMonospace;
-window.changeColumns = changeColumns;
-window.toggleCompactView = toggleCompactView;
-window.clearAllNotes = clearAllNotes;
-window.resetSettings = resetSettings;
-window.editNote = editNote;
-window.deleteNote = deleteNote;
+            request.onsuccess = () => {
+                const note = request.result;
+                if (note) {
+                    currentEditId = id;
+                    document.getElementById('noteTitle').value = note.title;
+                    document.getElementById('noteContent').value = note.content;
+                    showEditor();
+                }
+            };
+        }
 
-// apply saved settings on load
-(function applySavedSettings(){
-    const accent = localStorage.getItem('accentColor');
-    if (accent) document.documentElement.style.setProperty('--primary', accent);
-    const fs = localStorage.getItem('fontSize');
-    if (fs) changeFontSize(fs);
-    const lh = localStorage.getItem('lineHeight');
-    if (lh) changeLineHeight(lh);
-    if (localStorage.getItem('monospace') === 'true') toggleMonospace();
-    const cols = localStorage.getItem('columns') || 'auto';
-    changeColumns(cols);
-    if (localStorage.getItem('compact') === 'true') toggleCompactView();
-})();
-</script>
+        async function deleteNote(event, id) {
+            event.stopPropagation();
+            
+            if (!confirm('Notiz wirklich löschen?')) return;
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            await store.delete(id);
+            
+            await loadNotes();
+        }
+
+        function showEditor() {
+            document.getElementById('editor').style.display = 'block';
+            document.getElementById('noteTitle').focus();
+        }
+
+        function cancelEdit() {
+            currentEditId = null;
+            document.getElementById('noteTitle').value = '';
+            document.getElementById('noteContent').value = '';
+            document.getElementById('editor').style.display = 'none';
+        }
+        async function syncNotes() {
+            if (!accessToken) return;
+
+            const syncIcon = document.getElementById('syncIcon');
+            syncIcon.classList.add('sync-icon');
+            
+            try {
+                
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+                
+                request.onsuccess = async () => {
+                    const notes = request.result;
+                    
+                    for (const note of notes) {
+                        if (!note.synced) {
+                            await uploadToGDrive(note);
+                        }
+                    }
+                    
+                    syncIcon.classList.remove('sync-icon');
+                };
+            } catch (error) {
+                console.error('Sync error:', error);
+                syncIcon.classList.remove('sync-icon');
+                alert('Synchronisation fehlgeschlagen. Bitte erneut versuchen.');
+            }
+        }
+
+        async function uploadToGDrive(note) {
+            const metadata = {
+                name: `${note.title}.txt`,
+                mimeType: 'text/plain'
+            };
+
+            const form = new FormData();
+            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+            form.append('file', new Blob([note.content], { type: 'text/plain' }));
+
+            const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: form
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+        
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                note.driveId = result.id;
+                note.synced = true;
+                await store.put(note);
+            }
+        }
+
+        function setupPWA() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('installPrompt').style.display = 'block';
+            });
+
+            window.addEventListener('appinstalled', () => {
+                document.getElementById('installPrompt').style.display = 'none';
+                deferredPrompt = null;
+            });
+        }
+
+        async function installApp() {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                document.getElementById('installPrompt').style.display = 'none';
+            }
+            
+            deferredPrompt = null;
+        }
+
+        function checkOnlineStatus() {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            
+            if (navigator.onLine && accessToken) {
+                status.classList.remove('offline');
+                statusText.textContent = 'Online - Synchronisation aktiv';
+            } else if (navigator.onLine) {
+                statusText.textContent = 'Online - nicht mit Drive verbunden';
+            } else {
+                status.classList.add('offline');
+                statusText.textContent = 'Offline - nur lokale Speicherung';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        if ('serviceWorker' in navigator) {
+            const swCode = 
+                self.addEventListener('install', (event) => {
+                    self.skipWaiting();
+                });
+
+                self.addEventListener('activate', (event) => {
+                    event.waitUntil(clients.claim());
+                });
+
+                self.addEventListener('fetch', (event) => {
+                    event.respondWith(
+                        fetch(event.request).catch(() => {
+                            return new Response('Offline', { status: 503 });
+                        })
+                    );
+                });
+            ;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl);
+        }
+    </script>
 </body>
 </html>
