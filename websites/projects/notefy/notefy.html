@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a1a">
-    <title>Notizen - PWA</title>
+    <title>Notefy</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTm90aXplbiBBcHAiLCJzaG9ydF9uYW1lIjoiTm90aXplbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWExYTFhIiwidGhlbWVfY29sb3IiOiIjMWExYTFhIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMxYTFhMWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyBmaWxsPSclMjNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyUzRU4lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
     <style>
         * {
@@ -229,35 +229,25 @@
 <body>
     <div class="container">
         <header>
-            <h1>Notizen</h1>
-            <p class="subtitle">Deine persönliche Notizen-App mit Cloud-Sync</p>
+            <h1>Notefy</h1>
+            <p class="subtitle">Notefy is a very line-height note editor, which can be added as progressive web app to the desktop or homescreen.</p>
         </header>
 
         <div id="installPrompt" class="install-prompt" style="display: none;">
-            <p>📱 Installiere diese App auf deinem Gerät für schnellen Zugriff!</p>
-            <button onclick="installApp()">Jetzt installieren</button>
+            <p>Install as progressive web app</p>
+            <button onclick="installApp()">Install</button>
         </div>
-
-        <div class="status" id="status">
-            <span class="status-indicator"></span>
-            <span id="statusText">Offline - nur lokale Speicherung</span>
-        </div>
-
         <div class="controls">
-            <button class="btn-primary" onclick="showEditor()">+ Neue Notiz</button>
-            <button onclick="connectGoogleDrive()" id="gdBtn">Mit Google Drive verbinden</button>
-            <button onclick="syncNotes()" id="syncBtn" disabled>
-                <span id="syncIcon">🔄</span> Synchronisieren
-            </button>
+            <button class="btn-primary" onclick="showEditor()">+ New Note</button>
         </div>
 
         <div class="note-editor" id="editor" style="display: none;">
-            <h2 style="margin-bottom: 20px;">Notiz bearbeiten</h2>
+            <h2 style="margin-bottom: 20px;">Edit</h2>
             <input type="text" id="noteTitle" placeholder="Titel...">
-            <textarea id="noteContent" placeholder="Deine Notiz hier..."></textarea>
+            <textarea id="noteContent" placeholder="Your notes here..."></textarea>
             <div style="display: flex; gap: 10px;">
-                <button class="btn-primary" onclick="saveNote()">Speichern</button>
-                <button onclick="cancelEdit()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveNote()">Save</button>
+                <button onclick="cancelEdit()">Close</button>
             </div>
         </div>
 
@@ -265,23 +255,13 @@
     </div>
 
     <script>
-        // IndexedDB Setup
         let db;
         const DB_NAME = 'NotesDB';
         const STORE_NAME = 'notes';
         
-        // Google Drive API
-        let gapi, google;
-        let accessToken = null;
-        const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com'; // Hier Client ID einfügen
-        const API_KEY = 'YOUR_API_KEY'; // Hier API Key einfügen
-        const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
-        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+       
 
-        let currentEditId = null;
-        let deferredPrompt;
-
-        // Init
+        // Init of the app
         document.addEventListener('DOMContentLoaded', initApp);
 
         async function initApp() {
@@ -289,12 +269,6 @@
             await loadNotes();
             checkOnlineStatus();
             setupPWA();
-            
-            // Load Google API
-            loadGoogleAPI();
-            
-            window.addEventListener('online', checkOnlineStatus);
-            window.addEventListener('offline', checkOnlineStatus);
         }
 
         // IndexedDB
@@ -324,7 +298,7 @@
             const content = document.getElementById('noteContent').value.trim();
             
             if (!title || !content) {
-                alert('Bitte Titel und Inhalt eingeben!');
+                alert('Title and Textfield should not be empty!');
                 return;
             }
 
@@ -408,7 +382,7 @@
         async function deleteNote(event, id) {
             event.stopPropagation();
             
-            if (!confirm('Notiz wirklich löschen?')) return;
+            if (!confirm('Delete Note?')) return;
 
             const transaction = db.transaction([STORE_NAME], 'readwrite');
             const store = transaction.objectStore(STORE_NAME);
@@ -428,132 +402,6 @@
             document.getElementById('noteContent').value = '';
             document.getElementById('editor').style.display = 'none';
         }
-
-        // Google Drive Integration
-        function loadGoogleAPI() {
-            const script = document.createElement('script');
-            script.src = 'https://accounts.google.com/gsi/client';
-            script.async = true;
-            script.defer = true;
-            script.onload = initGoogleAPI;
-            document.head.appendChild(script);
-        }
-
-        function initGoogleAPI() {
-            if (window.google) {
-                // Check if already logged in
-                const savedToken = localStorage.getItem('gdrive_token');
-                if (savedToken) {
-                    accessToken = savedToken;
-                    updateGDriveStatus(true);
-                }
-            }
-        }
-
-        function connectGoogleDrive() {
-            if (accessToken) {
-                // Logout
-                accessToken = null;
-                localStorage.removeItem('gdrive_token');
-                updateGDriveStatus(false);
-                return;
-            }
-
-            // Google OAuth
-            const client = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: SCOPES,
-                callback: (response) => {
-                    if (response.access_token) {
-                        accessToken = response.access_token;
-                        localStorage.setItem('gdrive_token', accessToken);
-                        updateGDriveStatus(true);
-                        syncNotes();
-                    }
-                }
-            });
-            
-            client.requestAccessToken();
-        }
-
-        function updateGDriveStatus(connected) {
-            const btn = document.getElementById('gdBtn');
-            const syncBtn = document.getElementById('syncBtn');
-            const statusText = document.getElementById('statusText');
-            
-            if (connected) {
-                btn.textContent = '✓ Google Drive verbunden';
-                syncBtn.disabled = false;
-                statusText.textContent = 'Online - Synchronisation aktiv';
-                document.getElementById('status').classList.remove('offline');
-            } else {
-                btn.textContent = 'Mit Google Drive verbinden';
-                syncBtn.disabled = true;
-                statusText.textContent = 'Offline - nur lokale Speicherung';
-                document.getElementById('status').classList.add('offline');
-            }
-        }
-
-        async function syncNotes() {
-            if (!accessToken) return;
-
-            const syncIcon = document.getElementById('syncIcon');
-            syncIcon.classList.add('sync-icon');
-            
-            try {
-                // Get all local notes
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.getAll();
-                
-                request.onsuccess = async () => {
-                    const notes = request.result;
-                    
-                    for (const note of notes) {
-                        if (!note.synced) {
-                            await uploadToGDrive(note);
-                        }
-                    }
-                    
-                    syncIcon.classList.remove('sync-icon');
-                };
-            } catch (error) {
-                console.error('Sync error:', error);
-                syncIcon.classList.remove('sync-icon');
-                alert('Synchronisation fehlgeschlagen. Bitte erneut versuchen.');
-            }
-        }
-
-        async function uploadToGDrive(note) {
-            const metadata = {
-                name: `${note.title}.txt`,
-                mimeType: 'text/plain'
-            };
-
-            const form = new FormData();
-            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-            form.append('file', new Blob([note.content], { type: 'text/plain' }));
-
-            const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                },
-                body: form
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                
-                // Update local note with driveId
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                note.driveId = result.id;
-                note.synced = true;
-                await store.put(note);
-            }
-        }
-
         // PWA Installation
         function setupPWA() {
             window.addEventListener('beforeinstallprompt', (e) => {
@@ -581,28 +429,11 @@
             deferredPrompt = null;
         }
 
-        function checkOnlineStatus() {
-            const status = document.getElementById('status');
-            const statusText = document.getElementById('statusText');
-            
-            if (navigator.onLine && accessToken) {
-                status.classList.remove('offline');
-                statusText.textContent = 'Online - Synchronisation aktiv';
-            } else if (navigator.onLine) {
-                statusText.textContent = 'Online - nicht mit Drive verbunden';
-            } else {
-                status.classList.add('offline');
-                statusText.textContent = 'Offline - nur lokale Speicherung';
-            }
-        }
-
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
-
-        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', (event) => {
