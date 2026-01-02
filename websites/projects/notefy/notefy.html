@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1a1a1a">
     <link href="../../../css/style.css" rel= "stylesheet">
     <title>Notefy</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTm90aXplbiBBcHAiLCJzaG9ydF9uYW1lIjoiTm90aXplbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWExYTFhIiwidGhlbWVfY29sb3IiOiIjMWExYTFhIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMxYTFhMWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyBmaWxsPSclMjNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyUzRU4lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
@@ -15,8 +14,6 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             color: #ffffff;
             min-height: 100vh;
             padding: 20px;
@@ -63,6 +60,7 @@
             font-size: 14px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            margin-left: 40%;
         }
 
         button:hover {
@@ -74,8 +72,15 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-
-        .btn-primary {
+        .new-note-button {
+            background: rgba(66, 153, 225, 0.3);
+            border-color: rgba(66, 153, 225, 0.5);
+        }
+        .cancel-button {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(47, 57, 65, 0.5);
+        }
+        .save-button {
             background: rgba(66, 153, 225, 0.3);
             border-color: rgba(66, 153, 225, 0.5);
         }
@@ -83,29 +88,6 @@
         .btn-primary:hover {
             background: rgba(66, 153, 225, 0.5);
         }
-
-        .status {
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4ade80;
-        }
-
-        .status.offline .status-indicator {
-            background: #ef4444;
-        }
-
         .note-editor {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -122,14 +104,12 @@
             padding: 12px;
             border-radius: 8px;
             font-size: 16px;
-            font-family: inherit;
             margin-bottom: 15px;
         }
 
         textarea {
             min-height: 200px;
             resize: vertical;
-            font-family: 'Courier New', monospace;
         }
 
         input::placeholder, textarea::placeholder {
@@ -193,17 +173,8 @@
         .note-actions button {
             padding: 6px 12px;
             font-size: 12px;
+            object-fit: contain;
         }
-
-        .sync-icon {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         .install-prompt {
             background: rgba(66, 153, 225, 0.2);
             border: 1px solid rgba(66, 153, 225, 0.4);
@@ -258,17 +229,20 @@
             <button onclick="installApp()">Install</button>
         </div>
         <div class="controls">
-            <button class="btn-primary" onclick="showEditor()">+ New Note</button>
+            <button class="new-note-button" onclick="showEditor()">+ New Note</button>
         </div>
 
         <div class="note-editor" id="editor" style="display: none;">
             <h2 style="margin-bottom: 20px;">Edit</h2>
             <input type="text" id="noteTitle" placeholder="Titel...">
             <textarea id="noteContent" placeholder="Your notes here..."></textarea>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-primary" onclick="saveNote()">Save</button>
-                <button onclick="cancelEdit()">Close</button>
-            </div>
+                <button class="save-button" onclick="saveNote()">
+                    <a>Save</a>
+                </button>
+                <button class="cancel-button"onclick="cancelEdit()">
+                    <a>Close</a>
+                </button>
+            
         </div>
 
         <div class="notes-grid" id="notesGrid"></div>
