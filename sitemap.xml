@@ -28,8 +28,4 @@
 	<loc>https://farinalten.com/websites/changelog.html</loc>
 	<priority>0.8</priority>
 </url>
-<url>
-	<loc>https://farinalten.com/websites/settings.html</loc>
-	<priority>0.1</priority>
-</url>
 </urlset>
