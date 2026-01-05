@@ -2,42 +2,34 @@
 		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 	<loc>https://farinalten.com/</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
 	<priority>1.0</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/home</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/home.html</loc>
 	<priority>1.0</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/websites/projects</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/websites/projects.html</loc>
 	<priority>1.0</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/websites/contact</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/websites/contact.html</loc>
 	<priority>0.8</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/websites/blog</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/websites/blog.html</loc>
 	<priority>1.0</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/websites/legal</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/websites/legal.html</loc>
 	<priority>0.8</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/websites/changelog</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/websites/changelog.html</loc>
 	<priority>0.8</priority>
 </url>
 <url>
-	<loc>https://farinalten.com/websites/settings</loc>
-	<lastmod>2025-10-16T22:41:57+01:00</lastmod>
+	<loc>https://farinalten.com/websites/settings.html</loc>
 	<priority>0.1</priority>
 </url>
 </urlset>
