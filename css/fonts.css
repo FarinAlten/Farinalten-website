@@ -1,10 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+/* fonts.css
+   - Zentrale Font-Variable und optionale lokale WOFF-Fallbacks.
+   - Google Font 'Goldman' kommt via <link> in HTML; hier setzen wir Fallbacks/Local-Fonts.
+*/
 
-:root {
-  --font-display: 'Goldman', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+/* lokale @font-face-Fallbacks (optional, falls die Dateien im repo liegen) */
+@font-face {
+  font-family: 'Goldman Sans';
+  src: url('fonts/GoldmanSans-Regular.woff2') format('woff2'),
+       url('fonts/GoldmanSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Goldman Sans';
+  src: url('fonts/GoldmanSans-Bold.woff2') format('woff2'),
+       url('fonts/GoldmanSans-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
+/* Zentrale Font-Variable: zuerst die Google-Font 'Goldman', dann lokale 'Goldman Sans' als Fallback */
+:root{
+  --main-font: 'Goldman', 'Goldman Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 
-body {
-  font-family: var(--font-display);
+/* Global: alle Texte verwenden die Hauptschrift */
+html, body {
+  font-family: var(--main-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
