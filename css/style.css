@@ -8,7 +8,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Animated gradient background overlay */
 body::before {
     content: '';
     position: fixed;
@@ -17,9 +16,9 @@ body::before {
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.1) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 55%);
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.08) 0%, transparent 55%);
     pointer-events: none;
     z-index: 0;
     animation: gradient-shift 20s ease-in-out infinite;
@@ -30,7 +29,7 @@ body::before {
     50% { opacity: 0.7; }
 }
 
-/* Glass effect for main containers */
+
 nav {
     position: fixed;
     width: 100%;
@@ -64,7 +63,7 @@ nav {
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border-radius: 16px;
     padding: 4px 16px;
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15),
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.4);
 }
@@ -104,13 +103,13 @@ nav {
 
 .navbar-nav a:hover,
 .navbar-nav a.active {
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(59, 130, 246, 0.15);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    color: #4f46e5;
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2),
+    color: #2563eb;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    border: 1px solid rgba(59, 130, 246, 0.25);
     transform: translateY(-2px);
 }
 
@@ -164,7 +163,7 @@ nav {
 
 .textlink {
     text-decoration: none;
-    color: #4f46e5; 
+    color: #2563eb; 
 }
 
 .content {
@@ -223,9 +222,9 @@ nav {
 
 .Box:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 24px 64px rgba(99, 102, 241, 0.15),
+    box-shadow: 0 24px 64px rgba(59, 130, 246, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .Box:hover::before {
@@ -286,7 +285,7 @@ footer {
 }
 
 footer a {
-    color: #4f46e5; 
+    color: #2563eb; 
     text-decoration: none;
     margin: 0 10px;
 }
@@ -341,8 +340,8 @@ footer a:hover {
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    color: #4f46e5;
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    color: #2563eb;
+    border: 1px solid rgba(59, 130, 246, 0.25);
     border-radius: 16px;
     padding: 8px 18px;
     font-weight: 700;
@@ -355,11 +354,11 @@ footer a:hover {
 }
 
 .mode-toggle.active {
-    background: rgba(99, 102, 241, 0.2);
+    background: rgba(59, 130, 246, 0.2);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    color: #4f46e5;
-    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: #2563eb;
+    border: 1px solid rgba(59, 130, 246, 0.4);
 }
 
 #display {
@@ -410,7 +409,7 @@ button {
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 14px;
-    color: #4f46e5;
+    color: #2563eb;
     font-size: 1.15em;
     font-weight: 600;
     padding: 14px 0;
@@ -440,18 +439,18 @@ button:hover::before {
 }
 
 button:hover {
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(59, 130, 246, 0.15);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    color: #4338ca;
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2),
+    color: #1d4ed8;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.3);
     transform: translateY(-2px);
 }
 
 button:active {
-    background: rgba(99, 102, 241, 0.25);
+    background: rgba(59, 130, 246, 0.25);
     transform: translateY(0);
 }
 
@@ -579,9 +578,9 @@ button:nth-child(18) { grid-area: dot; }
 
 .project-box:hover {
     transform: translateY(-6px);
-    box-shadow: 0 24px 64px rgba(99, 102, 241, 0.15),
+    box-shadow: 0 24px 64px rgba(59, 130, 246, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .project-box:hover::before {
@@ -620,7 +619,7 @@ button:nth-child(18) { grid-area: dot; }
     margin: 0 0 6px 0;
     font-size: 1.25em;
     font-weight: 800;
-    color: #4f46e5;
+    color: #2563eb;
     text-align: left;
     line-height: 1.2;
     white-space: nowrap;
@@ -687,9 +686,9 @@ button:nth-child(18) { grid-area: dot; }
 
     body::before {
         background: 
-            radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
-            radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.12) 0%, transparent 45%),
-            radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 55%);
+            radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 45%),
+            radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
+            radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.1) 0%, transparent 55%);
     }
 
     nav {
@@ -706,7 +705,7 @@ button:nth-child(18) { grid-area: dot; }
         background: rgba(30, 41, 59, 0.6);
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
-        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2),
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2),
                     inset 0 1px 0 rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -723,13 +722,13 @@ button:nth-child(18) { grid-area: dot; }
 
     .navbar-nav a:hover,
     .navbar-nav a.active {
-        background: rgba(139, 92, 246, 0.2);
+        background: rgba(59, 130, 246, 0.2);
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
-        color: #c4b5fd;
-        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3),
+        color: #93c5fd;
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3),
                     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(139, 92, 246, 0.4);
+        border: 1px solid rgba(59, 130, 246, 0.4);
     }
 
     .headerbox {
@@ -756,7 +755,7 @@ button:nth-child(18) { grid-area: dot; }
     }
 
     .textlink {
-        color: #a78bfa;
+        color: #60a5fa;
     }
 
     .Box {
@@ -776,9 +775,9 @@ button:nth-child(18) { grid-area: dot; }
     }
 
     .Box:hover {
-        box-shadow: 0 24px 64px rgba(139, 92, 246, 0.25),
+        box-shadow: 0 24px 64px rgba(59, 130, 246, 0.25),
                     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(139, 92, 246, 0.4);
+        border: 1px solid rgba(59, 130, 246, 0.4);
     }
 
     .Box .gallery-img {
@@ -801,7 +800,7 @@ button:nth-child(18) { grid-area: dot; }
     }
 
     footer a {
-        color: #a78bfa;
+        color: #60a5fa;
     }
 
     .calculator {
@@ -823,16 +822,16 @@ button:nth-child(18) { grid-area: dot; }
         background: rgba(30, 41, 59, 0.6);
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
-        color: #a78bfa;
-        border: 1px solid rgba(139, 92, 246, 0.3);
+        color: #60a5fa;
+        border: 1px solid rgba(59, 130, 246, 0.3);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
                     inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .mode-toggle.active {
-        background: rgba(139, 92, 246, 0.25);
-        color: #c4b5fd;
-        border: 1px solid rgba(139, 92, 246, 0.5);
+        background: rgba(59, 130, 246, 0.25);
+        color: #93c5fd;
+        border: 1px solid rgba(59, 130, 246, 0.5);
     }
 
     #display {
@@ -851,7 +850,7 @@ button:nth-child(18) { grid-area: dot; }
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #a78bfa;
+        color: #60a5fa;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
                     inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
@@ -863,15 +862,15 @@ button:nth-child(18) { grid-area: dot; }
     }
 
     button:hover {
-        background: rgba(139, 92, 246, 0.2);
-        color: #c4b5fd;
-        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3),
+        background: rgba(59, 130, 246, 0.2);
+        color: #93c5fd;
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3),
                     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(139, 92, 246, 0.4);
+        border: 1px solid rgba(59, 130, 246, 0.4);
     }
 
     button:active {
-        background: rgba(139, 92, 246, 0.3);
+        background: rgba(59, 130, 246, 0.3);
     }
 
     button.clear, button.delete {
@@ -916,9 +915,9 @@ button:nth-child(18) { grid-area: dot; }
     }
 
     .project-box:hover {
-        box-shadow: 0 24px 64px rgba(139, 92, 246, 0.25),
+        box-shadow: 0 24px 64px rgba(59, 130, 246, 0.25),
                     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(139, 92, 246, 0.4);
+        border: 1px solid rgba(59, 130, 246, 0.4);
     }
 
     .project-box .gallery-img {
@@ -931,7 +930,7 @@ button:nth-child(18) { grid-area: dot; }
     }
 
     .project-box .title {
-        color: #a78bfa;
+        color: #60a5fa;
     }
 
     .project-box .subtitle {
@@ -959,9 +958,9 @@ button:nth-child(18) { grid-area: dot; }
 
 [data-theme="dark"] body::before {
     background: 
-        radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
-        radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 55%) !important;
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.1) 0%, transparent 55%) !important;
 }
 
 [data-theme="dark"] nav {
@@ -978,7 +977,7 @@ button:nth-child(18) { grid-area: dot; }
     background: rgba(30, 41, 59, 0.6) !important;
     backdrop-filter: blur(20px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.2),
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
@@ -995,13 +994,13 @@ button:nth-child(18) { grid-area: dot; }
 
 [data-theme="dark"] .navbar-nav a:hover,
 [data-theme="dark"] .navbar-nav a.active {
-    background: rgba(139, 92, 246, 0.2) !important;
+    background: rgba(59, 130, 246, 0.2) !important;
     backdrop-filter: blur(20px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    color: #c4b5fd !important;
-    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3),
+    color: #93c5fd !important;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
-    border: 1px solid rgba(139, 92, 246, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
 }
 
 [data-theme="dark"] .headerbox {
@@ -1022,7 +1021,7 @@ button:nth-child(18) { grid-area: dot; }
 }
 
 [data-theme="dark"] .textlink {
-    color: #a78bfa !important;
+    color: #60a5fa !important;
 }
 
 [data-theme="dark"] .Box {
@@ -1048,7 +1047,7 @@ button:nth-child(18) { grid-area: dot; }
 }
 
 [data-theme="dark"] footer a {
-    color: #a78bfa !important;
+    color: #60a5fa !important;
 }
 
 [data-theme="dark"] #display {
@@ -1075,20 +1074,20 @@ button:nth-child(18) { grid-area: dot; }
     backdrop-filter: blur(20px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #a78bfa !important;
+    color: #60a5fa !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-theme="dark"] button:hover {
-    background: rgba(139, 92, 246, 0.2) !important;
-    color: #c4b5fd !important;
-    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3),
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #93c5fd !important;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
 }
 
 [data-theme="dark"] button:active {
-    background: rgba(139, 92, 246, 0.3) !important;
+    background: rgba(59, 130, 246, 0.3) !important;
 }
 
 [data-theme="dark"] button.delete {
@@ -1117,7 +1116,7 @@ button:nth-child(18) { grid-area: dot; }
 }
 
 [data-theme="dark"] .project-box .title {
-    color: #a78bfa !important;
+    color: #60a5fa !important;
 }
 
 [data-theme="dark"] .project-box .subtitle {
@@ -1154,15 +1153,15 @@ button:nth-child(18) { grid-area: dot; }
     backdrop-filter: blur(16px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
     border: 1px solid rgba(255, 255, 255, 0.35) !important;
-    color: #4f46e5 !important;
+    color: #2563eb !important;
 }
 
 [data-theme="light"] button:hover {
-    background: rgba(99, 102, 241, 0.15) !important;
+    background: rgba(59, 130, 246, 0.15) !important;
 }
 
 [data-theme="light"] button:active {
-    background: rgba(99, 102, 241, 0.25) !important;
+    background: rgba(59, 130, 246, 0.25) !important;
 }
 
 [data-theme="light"] button.delete,
