@@ -39,6 +39,7 @@ nav {
     flex-wrap: nowrap;
     overflow-y: auto;
     gap: 8px;
+    backdrop-filter: blur(0.8);
 }
 .nav-item {
     flex: 0 0 auto;
