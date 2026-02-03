@@ -137,6 +137,7 @@ nav {
     height: 4px;
     background: black;
     border-radius: 50%;
+    margin-top: 1%;
 }
 
 .headerbox {
@@ -1083,12 +1084,6 @@ button:nth-child(18) { grid-area: dot; }
                 inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     border: 1px solid rgba(59, 130, 246, 0.4) !important;
 }
-
-[data-theme="dark"] .navbar-nav a.active::after {
-    background: #93c5fd !important;
-    box-shadow: 0 0 8px rgba(147, 197, 253, 0.8) !important;
-}
-
 [data-theme="dark"] .headerbox {
     background: rgba(30, 41, 59, 0.4) !important;
     backdrop-filter: blur(40px) saturate(180%) !important;
