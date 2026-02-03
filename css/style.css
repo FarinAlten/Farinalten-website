@@ -792,13 +792,6 @@ button:nth-child(18) { grid-area: dot; }
                     inset 0 1px 0 rgba(255, 255, 255, 0.15);
         border: 1px solid rgba(59, 130, 246, 0.4);
     }
-
-    /* macOS-Style Active Indicator für Dark Mode */
-    .navbar-nav a.active::after {
-        background: #93c5fd;
-        box-shadow: 0 0 8px rgba(147, 197, 253, 0.8);
-    }
-
     .headerbox {
         background: rgba(30, 41, 59, 0.4);
         backdrop-filter: blur(40px) saturate(180%);
