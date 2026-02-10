@@ -84,6 +84,34 @@
 					<p class="subtitle">Revamped the footer. This helps mobile users to have a better experience on this website.</p>
                 </div>
             </div>
+            <div id="changelog">
+    <div id="commits-list">Lade Commits...</div>
+  </div>
+
+  <script>
+    async function loadCommits() {
+      const username = 'farinalten'; 
+      const repo = 'farinalten-website';        
+      
+      try {
+        const response = await fetch(
+          `https://api.github.com/repos/${username}/${repo}/commits?per_page=20`
+        );
+        const commits = await response.json();
+        
+        const list = document.getElementById('commits-list');
+        list.innerHTML = commits.map(c => 
+          `<div class="commit">
+            <span class="date">${new Date(c.commit.author.date).toLocaleDateString('de-DE')}</span> - ${c.commit.message}
+          </div>`
+        ).join('');
+      } catch (error) {
+        document.getElementById('commits-list').innerHTML = 'Fehler beim Laden: ' + error.message;
+      }
+    }
+
+    window.addEventListener('load', loadCommits);
+  </script>
 		<footer>
 			© 2026 Farin Altenhöner  <br> |
 			<a href="../websites/legal.html">Legal Info</a> | 
