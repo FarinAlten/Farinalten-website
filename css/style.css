@@ -125,20 +125,6 @@ nav {
     border: 1px solid rgba(59, 130, 246, 0.25);
     transform: translateY(-2px);
 }
-
-/* macOS-Style Active Indicator */
-.navbar-nav a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background: black;
-    border-radius: 50%;
-}
-
 .headerbox {
     text-align: left;
     border-radius: 28px;
@@ -197,7 +183,6 @@ nav {
 
 .textlink {
     text-decoration: none;
-    color: #2563eb; 
 }
 
 .content {
@@ -337,7 +322,6 @@ footer a:hover {
     transform: translateY(-2px);
 }
 
-/* Calculator Styles */
 .calculator {
     background: rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(32px) saturate(180%);
@@ -572,7 +556,6 @@ button:nth-child(18) { grid-area: dot; }
     width: 100%;
 }
 
-/* Project Gallery */
 .project-gallery {
     display: flex;
     flex-direction: column;
@@ -717,10 +700,6 @@ button:nth-child(18) { grid-area: dot; }
     line-height: 1.5;
 }
 
-/* ============================================
-   DARK MODE
-   ============================================ */
-
 @media (prefers-color-scheme: dark) {
     body {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
@@ -782,13 +761,6 @@ button:nth-child(18) { grid-area: dot; }
                     inset 0 1px 0 rgba(255, 255, 255, 0.15);
         border: 1px solid rgba(59, 130, 246, 0.4);
     }
-
-    /* macOS-Style Active Indicator für Dark Mode */
-    .navbar-nav a.active::after {
-        background: #93c5fd;
-        box-shadow: 0 0 8px rgba(147, 197, 253, 0.8);
-    }
-
     .headerbox {
         background: rgba(30, 41, 59, 0.4);
         backdrop-filter: blur(40px) saturate(180%);
@@ -1018,11 +990,6 @@ button:nth-child(18) { grid-area: dot; }
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 }
-
-/* ============================================
-   FORCED DARK MODE
-   ============================================ */
-
 [data-theme="dark"] body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
     color: #f1f5f9 !important;
@@ -1276,10 +1243,6 @@ button:nth-child(18) { grid-area: dot; }
 [data-theme="light"] footer a:hover {
     color: #2563eb !important;
 }
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
 
 @media (max-width: 900px) {
     .buttons {
