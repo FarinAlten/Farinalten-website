@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Showcase | NextGen</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --accent-color: #00f2ff;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Hilfsklasse für den Scroll-Container */
+        .scroll-wrapper {
+            position: relative;
+        }
+
+        /* Das fixierte Handy-Mockup */
+        .phone-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 600px;
+            z-index: 10;
+            perspective: 1000px;
+            pointer-events: none; /* Text dahinter bleibt klickbar */
+        }
+
+        .phone-body {
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            border: 12px solid #333;
+            border-radius: 45px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #111, #222);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-color);
+            border-radius: 20px;
+            box-shadow: 0 0 20px var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        /* Sektionen für das Scrollytelling */
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0 10%;
+        }
+
+        .content-box {
+            max-width: 500px;
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        .right {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        h2 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 15px 35px;
+            background: var(--accent-color);
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Fortschrittsanzeige */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--accent-color);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar"></div>
+
+    <div class="phone-container">
+        <div class="phone-body">
+            <div class="screen-content">
+                <div class="app-icon"></div>
+                <div style="width: 80%; height: 10px; background: #333; border-radius: 5px; margin: 10px 0;"></div>
+                <div style="width: 60%; height: 10px; background: #333; border-radius: 5px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-wrapper">
+        <section id="step1">
+            <div class="content-box">
+                <h2>Die Zukunft.</h2>
+                <p>Erleben Sie eine App, die Ihre Arbeitsweise für immer verändern wird. Intuitiv, schnell und radikal einfach.</p>
+            </div>
+        </section>
+
+        <section id="step2" class="right">
+            <div class="content-box">
+                <h2>Grenzenlos.</h2>
+                <p>Synchronisieren Sie Ihre Daten in Echtzeit über alle Geräte hinweg. Ohne Ladezeiten, ohne Kompromisse.</p>
+            </div>
+        </section>
+
+        <section id="step3">
+            <div class="content-box">
+                <h2>Intelligent.</h2>
+                <p>Unsere KI lernt von Ihnen und automatisiert lästige Routineaufgaben, damit Sie sich auf das Wesentliche konzentrieren können.</p>
+            </div>
+        </section>
+
+        <section id="step4" class="right">
+            <div class="content-box">
+                <h2>Starten Sie jetzt.</h2>
+                <p>Verfügbar für iOS und Android. Werden Sie Teil von über 1 Million zufriedenen Nutzern.</p>
+                <a href="#" class="cta-btn">Kostenlos testen</a>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        // GSAP Plugin registrieren
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Animation: Fortschrittsbalken oben
+        gsap.to(".progress-bar", {
+            width: "100%",
+            ease: "none",
+            scrollTrigger: { scrub: 0.3 }
+        });
+
+        // 2. Animation: Jede Text-Sektion einblenden
+        const sections = document.querySelectorAll("section");
+        
+        sections.forEach((section, i) => {
+            const box = section.querySelector(".content-box");
+            
+            gsap.to(box, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 60%",
+                    end: "top 20%",
+                    scrub: true,
+                    toggleActions: "play reverse play reverse"
+                }
+            });
+        });
+
+        // 3. Animation: Das Handy steuern (Das Herzstück)
+        const phoneTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".scroll-wrapper",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1 // Sanfte Verzögerung für "Premium-Gefühl"
+            }
+        });
+
+        phoneTl
+            // Schritt 1 zu 2: Drehen und leicht neigen
+            .to(".phone-body", { rotateY: 180, rotateZ: 5, scale: 0.9 })
+            // Schritt 2 zu 3: Zoom-In in den Screen
+            .to(".phone-body", { rotateY: 360, rotateZ: 0, scale: 2.5, y: 100 })
+            // Schritt 3 zu 4: Wieder herauszoomen und zur Seite schieben
+            .to(".phone-body", { scale: 1, x: -300, rotateY: 10 });
+
+        // Hintergrundfarbe dezent ändern während des Scrollens
+        gsap.to("body", {
+            backgroundColor: "#00121a",
+            scrollTrigger: {
+                trigger: "#step3",
+                scrub: true
+            }
+        });
+    </script>
+</body>
+</html>
