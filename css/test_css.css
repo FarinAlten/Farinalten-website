@@ -1,195 +1,139 @@
-/* MATERIAL 3 EXPRESSIVE DESIGN TOKENS */
 :root {
-    /* Deine Primärfarbe (Blau) */
-    --md-sys-color-primary: #2563eb; 
+    /* M3 Expressive Tokens */
+    --md-sys-color-primary: #0056d2;
     --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #d8e2ff;
+    --md-sys-color-surface: #f8f9ff;
+    --md-sys-color-surface-container: #ffffff;
     
-    /* Container-Farben für Expressive Look */
-    --md-sys-color-surface-container: rgba(255, 255, 255, 0.7);
-    --md-sys-color-surface: #f8fafc;
-    
-    /* Expressive Shapes: Das Markenzeichen von M3 Expressive */
-    --md-sys-shape-corner-extra-large: 28px; /* Für die großen Boxen */
-    --md-sys-shape-corner-medium: 16px;      /* Für Buttons und Textfelder */
-    
-    /* Typografie (Greift auf deine fonts.css zu) */
-    --md-sys-typescale-title-large-font: var(--main-font);
+    /* Die Expressive Shapes */
+    --shape-extra-large: 28px;
+    --shape-medium: 16px;
 }
 
-/* BASIS LAYOUT */
-body {
-    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-    min-height: 100vh;
+body.m3-expressive-layout {
     margin: 0;
-    padding-top: 80px; /* Platz für die Navbar */
-}
-
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* GALLERY GRID */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px; /* Etwas mehr Platz für Expressive Spacing */
-    margin-top: 40px;
-}
-
-/* DIE EXPRESSIVE BOX (m3-card) */
-.m3-card {
-    background: var(--md-sys-color-surface-container);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: var(--md-sys-shape-corner-extra-large);
-    padding: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    min-height: 220px;
+    background-color: var(--md-sys-color-surface);
+    font-family: 'Roboto Flex', sans-serif;
+    min-height: 100vh;
 }
 
-.m3-card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 15px 35px rgba(37, 99, 235, 0.1);
-    border: 1px solid rgba(37, 99, 235, 0.2);
-}
-
-/* TEXT INNERHALB DER BOXEN */
-.m3-card .title {
-    font-size: 1.6rem;
-    color: #1e293b;
-    margin-bottom: 12px;
-    font-weight: 700;
-}
-
-.m3-card .subtitle {
-    color: #475569;
-    line-height: 1.6;
-    font-size: 1rem;
-}
-
-.card-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 24px;
-    gap: 12px;
-}
-
-md-filled-button, md-outlined-button, md-filled-tonal-button {
-    --md-filled-button-container-shape: var(--md-sys-shape-corner-medium);
-    --md-outlined-button-container-shape: var(--md-sys-shape-corner-medium);
-    font-family: var(--main-font); 
-}
-
-
-@media (max-width: 600px) {
-    .m3-card {
-        padding: 24px;
-        border-radius: 24px;
-    }
-    
-    .gallery {
-        gap: 20px;
-    }
-}
-/* SIDEBAR BASE */
-.m3-sidebar {
+/* FLOATING SIDEBAR (DRAWER) */
+.m3-drawer {
     position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 280px;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(15px);
-    border-right: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 24px 12px;
+    top: 16px;
+    left: 16px;
+    bottom: 16px;
+    width: 260px;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--shape-extra-large);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
-    z-index: 1000;
+    padding: 24px 12px;
+    z-index: 100;
 }
 
-/* LOGO & HEADER IN SIDEBAR */
-.sidebar-header {
+.drawer-header {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 0 16px 32px 16px;
+    padding: 0 16px 32px;
 }
 
-.sidebar-title {
-    font-family: var(--main-font);
-    font-size: 1.2rem;
+.brand-name {
+    font-family: var(--main-font); /* Goldman Sans */
     font-weight: 700;
-    color: var(--md-sys-color-primary);
+    letter-spacing: 2px;
+    font-size: 1.2rem;
 }
 
-/* LISTE & ITEMS */
-.sidebar-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.sidebar-item {
-    text-decoration: none;
-    color: #44474e;
-    height: 56px;
+.drawer-item {
     display: flex;
     align-items: center;
     gap: 12px;
+    height: 56px;
     padding: 0 24px;
-    font-family: var(--main-font);
-    font-size: 0.95rem;
-    border-radius: 28px; /* Voll-Expressive Radius */
-    transition: all 0.2s ease;
+    text-decoration: none;
+    color: #44474e;
+    border-radius: 28px;
+    margin-bottom: 8px;
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 
-.sidebar-item .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400;
+.drawer-item.active {
+    background-color: var(--md-sys-color-primary-container);
+    color: #001a41;
+    font-variation-settings: 'wght' 700;
 }
 
-/* HOVER & ACTIVE STATES */
-.sidebar-item:hover {
-    background-color: rgba(37, 99, 235, 0.08);
+/* MAIN CONTENT AREA */
+.m3-main-content {
+    margin-left: 292px; /* Sidebar Breite + Margin */
+    padding: 60px 40px;
+    width: 100%;
+}
+
+/* HERO TEXT (ECHT EXPRESSIVE) */
+.hero-title {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-variation-settings: 'wght' 900, 'wdth' 120;
+    line-height: 0.85;
+    letter-spacing: -3px;
+    margin: 0 0 24px 0;
+    color: #1a1c1e;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 600px;
+    color: #44474e;
+    line-height: 1.6;
+}
+
+/* CARDS */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 60px;
+}
+
+.m3-expressive-card {
+    background: white;
+    padding: 32px;
+    border-radius: var(--shape-extra-large);
+    border: 1px solid #e0e2ec;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.m3-expressive-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.icon-display {
+    font-size: 40px;
     color: var(--md-sys-color-primary);
+    margin-bottom: 16px;
 }
 
-.sidebar-item.active {
-    background-color: #eaddff; /* M3 Primary Container Color */
-    color: #21005d;
-    font-weight: 700;
+/* FAB */
+.expressive-fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    --md-fab-container-shape: 20px; /* Expressive FABs sind oft weniger rund */
 }
 
-.sidebar-item.active .material-symbols-outlined {
-    font-variation-settings: 'FILL' 1, 'wght' 400; /* Gefülltes Icon für aktiven Tab */
-}
-
-/* CONTENT ANPASSUNG */
-/* Da die Sidebar links feststeht, muss der Content nach rechts rücken */
-body {
-    padding-left: 280px; /* Breite der Sidebar */
-    padding-top: 20px;
-}
-
+/* MOBILE */
 @media (max-width: 900px) {
-    .m3-sidebar {
-        width: 80px; /* Schmale Sidebar auf Tablets */
-    }
-    .sidebar-title, .sidebar-item span:not(.material-symbols-outlined) {
-        display: none;
-    }
-    body {
-        padding-left: 80px;
-    }
+    .m3-drawer { width: 80px; }
+    .brand-name, .drawer-item span:not(.material-symbols-outlined) { display: none; }
+    .m3-main-content { margin-left: 100px; padding: 40px 20px; }
 }
