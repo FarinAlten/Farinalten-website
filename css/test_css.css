@@ -100,3 +100,96 @@ md-filled-button, md-outlined-button, md-filled-tonal-button {
         gap: 20px;
     }
 }
+/* SIDEBAR BASE */
+.m3-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+/* LOGO & HEADER IN SIDEBAR */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 16px 32px 16px;
+}
+
+.sidebar-title {
+    font-family: var(--main-font);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--md-sys-color-primary);
+}
+
+/* LISTE & ITEMS */
+.sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-item {
+    text-decoration: none;
+    color: #44474e;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 24px;
+    font-family: var(--main-font);
+    font-size: 0.95rem;
+    border-radius: 28px; /* Voll-Expressive Radius */
+    transition: all 0.2s ease;
+}
+
+.sidebar-item .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400;
+}
+
+/* HOVER & ACTIVE STATES */
+.sidebar-item:hover {
+    background-color: rgba(37, 99, 235, 0.08);
+    color: var(--md-sys-color-primary);
+}
+
+.sidebar-item.active {
+    background-color: #eaddff; /* M3 Primary Container Color */
+    color: #21005d;
+    font-weight: 700;
+}
+
+.sidebar-item.active .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 400; /* Gefülltes Icon für aktiven Tab */
+}
+
+/* CONTENT ANPASSUNG */
+/* Da die Sidebar links feststeht, muss der Content nach rechts rücken */
+body {
+    padding-left: 280px; /* Breite der Sidebar */
+    padding-top: 20px;
+}
+
+@media (max-width: 900px) {
+    .m3-sidebar {
+        width: 80px; /* Schmale Sidebar auf Tablets */
+    }
+    .sidebar-title, .sidebar-item span:not(.material-symbols-outlined) {
+        display: none;
+    }
+    body {
+        padding-left: 80px;
+    }
+}
