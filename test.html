@@ -1,127 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <script src="./sources/script/js/gtag.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Farin Altenhöner - Personal Website">
-        <title>Farin Altenhöner - Test M3 Expressive</title>
-        
-        <link href="./css/test_css.css" rel="stylesheet">
-        <link href="./css/fonts.css" rel="stylesheet">
-        
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-        
-        <script type="importmap">
-        {
-          "imports": {
-            "@material/web/": "https://esm.run/@material/web/"
-          }
-        }
-        </script>
-        <script type="module">
-          import '@material/web/all.js';
-        </script>
-    </head>
-    <body>
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-535RGT8S"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        
-        <div class="loader" id="loader"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farin | Material 3 Expressive</title>
+    
+    <link href="./css/fonts.css" rel="stylesheet">
+    <link href="./css/test_css.css" rel="stylesheet">
 
-        <aside class="m3-sidebar">
-            <div class="sidebar-header">
-                <p class="nav-logo"><b>F</b></p>
-                <span class="sidebar-title">Farin</span>
-            </div>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
-            <ul class="sidebar-list">
-                <li>
-                    <a href="./home.html" class="sidebar-item active">
-                        <span class="material-symbols-outlined">home</span>
-                        <span>Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="./websites/projects.html" class="sidebar-item">
-                        <span class="material-symbols-outlined">folder_open</span>
-                        <span>Projects</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="./websites/contact.html" class="sidebar-item">
-                        <span class="material-symbols-outlined">alternate_email</span>
-                        <span>Contact</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="./websites/blog.html" class="sidebar-item">
-                        <span class="material-symbols-outlined">book</span>
-                        <span>Blog</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
+    <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+    </script>
+    <script type="module">
+      import '@material/web/all.js';
+    </script>
+</head>
+<body class="m3-expressive-layout">
 
-        <div class="content">
-            <div class="headerbox">
-                <p class="title"><b>Hi, I am Farin!</b></p>
-                <p class="headersubtitle">
-                    I am a student from North Rhine-Westphalia, and a software development and photography enthusiast.
-                </p>
-            </div>
-
-            <div class="gallery">
-                <div class="m3-card">
-                    <div>
-                        <h3 class="title">Development Projects</h3>
-                        <p class="subtitle">Find my development projects here and on GitHub.</p>
-                    </div>
-                    <div class="card-actions">
-                        <md-filled-button onclick="window.location.href='./websites/projects.html'">
-                            <span slot="icon" class="material-symbols-outlined">code</span>
-                            View Work
-                        </md-filled-button>
-                    </div>
-                </div>
-
-                <div class="m3-card">
-                    <div>
-                        <h3 class="title">Contact</h3>
-                        <p class="subtitle">Contact me using social media, GitHub or via E-Mail.</p>
-                    </div>
-                    <div class="card-actions">
-                        <md-outlined-button onclick="window.location.href='./websites/contact.html'">
-                            <span slot="icon" class="material-symbols-outlined">mail</span>
-                            Get in Touch
-                        </md-outlined-button>
-                    </div>
-                </div>
-
-                <div class="m3-card">
-                    <div>
-                        <h3 class="title">Blog</h3>
-                        <p class="subtitle">Blog posts about my favorite apps and Apple Watch faces.</p>
-                    </div>
-                    <div class="card-actions">
-                        <md-filled-tonal-button onclick="window.location.href='./websites/blog.html'">
-                            <span slot="icon" class="material-symbols-outlined">article</span>
-                            Read Blog
-                        </md-filled-tonal-button>
-                    </div>
-                </div>
-            </div>
+    <aside class="m3-drawer">
+        <div class="drawer-header">
+            <div class="m3-icon-button">F</div>
+            <span class="brand-name">FARIN</span>
         </div>
 
-        <md-fab size="large" variant="primary" class="main-fab" onclick="window.location.href='./websites/contact.html'">
-            <span slot="icon" class="material-symbols-outlined">chat</span>
-        </md-fab>
+        <nav class="drawer-nav">
+            <a href="./home.html" class="drawer-item active">
+                <span class="material-symbols-outlined">home</span>
+                <span>Home</span>
+            </a>
+            <a href="./websites/projects.html" class="drawer-item">
+                <span class="material-symbols-outlined">tactic</span>
+                <span>Projects</span>
+            </a>
+            <a href="./websites/blog.html" class="drawer-item">
+                <span class="material-symbols-outlined">explore</span>
+                <span>Blog</span>
+            </a>
+            <a href="./websites/contact.html" class="drawer-item">
+                <span class="material-symbols-outlined">chat_bubble</span>
+                <span>Contact</span>
+            </a>
+        </nav>
+    </aside>
 
-        <footer>
-             © 2026 Farin Altenhöner <br> |
-            <a href="./websites/legal.html">Legal Info</a> | 
-            <a href="./websites/contact.html">Contact</a> |
-            <a href="./websites/changelog.html">Changelog</a> |
-        </footer>
-    </body>
+    <main class="m3-main-content">
+        <header class="expressive-header">
+            <h1 class="hero-title">Software<br>& Vision.</h1>
+            <p class="hero-subtitle">Student & Developer from NRW. Enthusiasmus für Code und Fotografie, kombiniert in einem ausdrucksstarken Design.</p>
+        </header>
+
+        <section class="gallery-grid">
+            <div class="m3-expressive-card">
+                <div class="card-body">
+                    <span class="material-symbols-outlined icon-display">terminal</span>
+                    <h3>Projects</h3>
+                    <p>Meine neuesten Entwicklungen, direkt von GitHub in dein Browserfenster.</p>
+                </div>
+                <div class="card-footer">
+                    <md-filled-button onclick="location.href='./websites/projects.html'">Entdecken</md-filled-button>
+                </div>
+            </div>
+
+            <div class="m3-expressive-card">
+                <div class="card-body">
+                    <span class="material-symbols-outlined icon-display">auto_awesome</span>
+                    <h3>Blog</h3>
+                    <p>Gedanken über Tech, Apps und die Ästhetik von Apple Watch Faces.</p>
+                </div>
+                <div class="card-footer">
+                    <md-filled-tonal-button onclick="location.href='./websites/blog.html'">Lesen</md-filled-tonal-button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <md-fab size="large" variant="primary" class="expressive-fab" onclick="location.href='./websites/contact.html'">
+        <span slot="icon" class="material-symbols-outlined">edit_square</span>
+    </md-fab>
+
+</body>
 </html>
