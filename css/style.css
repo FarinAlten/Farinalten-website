@@ -1303,3 +1303,33 @@ button:nth-child(18) { grid-area: dot; }
 #changelog { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
     .commit { margin: 10px 0; padding: 5px; border-bottom: 1px solid #eee; }
     .date { font-weight: bold; color: #666; }
+
+
+:root {
+    --md-sys-color-primary: #2563eb; 
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-surface-container: #ffffff;
+    
+    --md-sys-shape-corner-extra-large: 28px;
+    --md-sys-shape-corner-medium: 16px;
+}
+
+.m3-card {
+    background: white;
+    padding: 32px;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+md-filled-button {
+    --md-filled-button-container-shape: 16px; 
+}
+
+md-outlined-text-field {
+    --md-outlined-text-field-container-shape: 12px;
+}
