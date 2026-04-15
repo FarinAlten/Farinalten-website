@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Meine Netlify Seite</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    // Lädt alle verfügbaren Material-Elemente auf einmal
+    import '@material/web/all.js';
+  </script>
+
+  <style>
+    /* Ein bisschen Abstand für die Demo */
+    body { font-family: 'Roboto', sans-serif; padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+  </style>
+</head>
+<body>
+
+  <h1>Willkommen</h1>
+  
+  <div>
+    <md-filled-button>Klick mich!</md-filled-button>
+  </div>
+
+  <div>
+    <label>
+      <md-checkbox checked></md-checkbox>
+      Ich nutze Material Design
+    </label>
+  </div>
+
+  <div>
+    <md-outlined-text-field label="Dein Name" value=""></md-outlined-text-field>
+  </div>
+
+</body>
+</html>
