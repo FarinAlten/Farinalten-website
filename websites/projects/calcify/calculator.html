@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Calcify- Farin-Alten</title>
+		<link href="../../../css/style.css" rel="stylesheet">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="theme-color" content="#1f1f1f">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Calculator">
+		<link rel="apple-touch-icon" href="/icon.jpg">
+	</head>
+	<body>
+		<nav>
+    		<ul class="navbar-nav">
+        		<li class="nav-item">
+					<li class="nav-item">
+						<p class="nav-logo"><b>F</b></p>
+        			</li>
+					<a class="nav-link" href="../../../home.html">Home</a>
+        		</li>
+        		<li class="nav-item">
+					<a class="nav-link" href="../../../websites/projects.html">Projects</a>
+        		</li>
+        		<li class="nav-item">
+            	<a class="nav-link" href="../../../websites/contact.html">Contact</a>
+        		</li>
+        		<li class="nav-item">
+            		<a class="nav-link active" href="../../../websites/projects/calculator.html">Calcify</a>
+        		</li>
+   			</ul>
+	</nav>
+<div class="content">
+ <div class="headerbox">
+    <a class="title">Calcify</a>
+    <p class="headersubtitle"><br>This is a simple web-calculator, which as installable as a progressive web app to the desktop or homescreen.</p>
+ </div>
+ <div class="calculator">
+    <div class="calc-header">
+        <button id="mode-toggle" class="mode-toggle" onclick="toggleMode()">Scientific Mode</button>
+    </div>
+    <input type="text" id="display" disabled>
+    <div class="buttons" id="standard-buttons">
+        <button onclick="clearDisplay()" class="clear">C</button>
+        <button onclick="deleteLast()" class="delete">DEL</button>
+        <button onclick="appendToDisplay('/')">÷</button>
+        <button onclick="appendToDisplay('*')">×</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('-')">−</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('+')">+</button>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="calculate()" class="calculate">=</button>
+        <button onclick="appendToDisplay('0')" class="zero">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+    </div>
+    <div class="buttons scientific-buttons" id="scientific-buttons" style="display:none;">
+        <button onclick="appendToDisplay('(')">(</button>
+        <button onclick="appendToDisplay(')')">)</button>
+        <button onclick="appendToDisplay('Math.PI')">π</button>
+        <button onclick="appendToDisplay('Math.E')">e</button>
+        <button onclick="appendToDisplay('**')">xʸ</button>
+        <button onclick="appendToDisplay('Math.sqrt(')">√</button>
+        <button onclick="appendToDisplay('Math.abs(')">abs</button>
+        <button onclick="appendToDisplay('Math.exp(')">exp</button>
+        <button onclick="appendToDisplay('Math.sin(')">sin</button>
+        <button onclick="appendToDisplay('Math.cos(')">cos</button>
+        <button onclick="appendToDisplay('Math.tan(')">tan</button>
+        <button onclick="appendToDisplay('Math.asin(')">asin</button>
+        <button onclick="appendToDisplay('Math.acos(')">acos</button>
+        <button onclick="appendToDisplay('Math.atan(')">atan</button>
+        <button onclick="appendToDisplay('Math.log10(')">log</button>
+        <button onclick="appendToDisplay('Math.log(')">ln</button>
+        <button onclick="appendToDisplay('1/')">1/x</button>
+        <button onclick="appendToDisplay('%')">%</button>
+        <button onclick="appendToDisplay('Math.floor(')">floor</button>
+        <button onclick="appendToDisplay('Math.ceil(')">ceil</button>
+        <button onclick="appendToDisplay('Math.round(')">round</button>
+    </div>
+</div>
+</div>
+		</div>
+		</div>
+		<script>
+function clearDisplay() {
+    document.getElementById('display').value = '';
+}
+function deleteLast() {
+    let display = document.getElementById('display').value;
+    document.getElementById('display').value = display.slice(0, -1);
+}
+function appendToDisplay(value) {
+    document.getElementById('display').value += value;
+}
+function calculate() {
+    let display = document.getElementById('display').value;
+    try {
+        display = display.replace(/(\d+(\.\d+)?)%/g, '($1/100)');
+        let result = eval(display);
+        document.getElementById('display').value = result;
+    } catch (e) {
+        document.getElementById('display').value = 'Error';
+    }
+}
+function toggleMode() {
+    const sci = document.getElementById('scientific-buttons');
+    const btn = document.getElementById('mode-toggle');
+    if (sci.style.display === "none") {
+        sci.style.display = "grid";
+        btn.classList.add('active');
+        btn.textContent = "Standard Mode";
+    } else {
+        sci.style.display = "none";
+        btn.classList.remove('active');
+        btn.textContent = "Scientific Mode";
+    }
+}
+document.addEventListener('keydown', function(e) {
+    if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== 'display') return;
+
+    const allowed = '0123456789.+-*/()%^';
+    if (allowed.includes(e.key)) {
+        appendToDisplay(e.key);
+        highlightButton(e.key);
+    } else if (e.key === 'Enter' || e.key === '=') {
+        e.preventDefault();
+        calculate();
+        highlightButton('=');
+    } else if (e.key === 'Backspace') {
+        deleteLast();
+        highlightButton('DEL');
+    } else if (e.key === 'Delete') {
+        clearDisplay();
+        highlightButton('C');
+    }
+});
+function highlightButton(key) {
+    let btn = null;
+    if (key === 'Enter' || key === '=') btn = document.querySelector('.calculate');
+    else if (key === 'Backspace' || key === 'DEL') btn = document.querySelector('.delete');
+    else if (key === 'Delete' || key === 'C') btn = document.querySelector('.clear');
+    else if (key === '+') btn = Array.from(document.querySelectorAll('.buttons button')).find(b => b.textContent.trim() === '+');
+    else if (key === '-') btn = Array.from(document.querySelectorAll('.buttons button')).find(b => b.textContent.trim() === '−');
+    else if (key === '*') btn = Array.from(document.querySelectorAll('.buttons button')).find(b => b.textContent.trim() === '×');
+    else if (key === '/') btn = Array.from(document.querySelectorAll('.buttons button')).find(b => b.textContent.trim() === '÷');
+    else btn = Array.from(document.querySelectorAll('.buttons button')).find(b => b.textContent.trim() === key);
+
+    if (btn) {
+        btn.classList.add('active-key');
+        setTimeout(() => btn.classList.remove('active-key'), 120);
+    }
+}
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => console.log('Service Worker registriert', reg))
+            .catch(err => console.error('Service Worker Fehler:', err));
+    });
+}
+		</script>
+		<footer>
+    		© 2025 Farin Altenhöner <br> | 
+    		<a href="../../../websites/contact.html">Contact</a> |
+    		<a href="../../../websites/legal.html">Legal Notice</a> 
+            <a href="../../../websites/changelog.html">Changelog</a>
+		</footer>
+	</body>
+</html>
