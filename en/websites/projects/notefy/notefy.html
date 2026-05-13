@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../../css/style.css" rel= "stylesheet">
+    <title>Notefy</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTm90aXplbiBBcHAiLCJzaG9ydF9uYW1lIjoiTm90aXplbiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWExYTFhIiwidGhlbWVfY29sb3IiOiIjMWExYTFhIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMxYTFhMWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyBmaWxsPSclMjNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyUzRU4lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            margin-left: 40%;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .new-note-button {
+            background: rgba(66, 153, 225, 0.3);
+            border-color: rgba(66, 153, 225, 0.5);
+        }
+        .cancel-button {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(47, 57, 65, 0.5);
+        }
+        .save-button {
+            background: rgba(66, 153, 225, 0.3);
+            border-color: rgba(66, 153, 225, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: rgba(66, 153, 225, 0.5);
+        }
+        .note-editor {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #888;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .note-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .note-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .note-title {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .note-content {
+            color: #aaa;
+            font-size: 0.9em;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .note-actions button {
+            padding: 6px 12px;
+            font-size: 12px;
+            object-fit: contain;
+        }
+        .install-prompt {
+            background: rgba(66, 153, 225, 0.2);
+            border: 1px solid rgba(66, 153, 225, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .install-prompt button {
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    		<ul class="navbar-nav">
+        		<li class="nav-item">
+					<li class="nav-item">
+						<p class="nav-logo"><b>F</b></p>
+        			</li>
+					<a class="nav-link" href="../../../home.html">Home</a>
+        		</li>
+        		<li class="nav-item">
+					<a class="nav-link" href="../../../websites/projects.html">Projects</a>
+        		</li>
+        		<li class="nav-item">
+            	<a class="nav-link" href="../../../websites/contact.html">Contact</a>
+        		</li>
+        		<li class="nav-item">
+            		<a class="nav-link active" href="../../../websites/projects/calculator.html">Calcify</a>
+        		</li>
+   			</ul>
+	</nav>
+    <div class="container">
+        <header>
+            <h1>Notefy</h1>
+            <p class="subtitle">Notefy is a very light-weight note editor, <br> which can be added as progressive web app to the desktop or homescreen.</p>
+        </header>
+
+        <div id="installPrompt" class="install-prompt" style="display: none;">
+            <p>Install as progressive web app</p>
+            <button onclick="installApp()">Install</button>
+        </div>
+        <div class="controls">
+            <button class="new-note-button" onclick="showEditor()">+ New Note</button>
+        </div>
+
+        <div class="note-editor" id="editor" style="display: none;">
+            <h2 style="margin-bottom: 20px;">Edit</h2>
+            <input type="text" id="noteTitle" placeholder="Titel...">
+            <textarea id="noteContent" placeholder="Your notes here..."></textarea>
+                <button class="save-button" onclick="saveNote()">
+                    <a>Save</a>
+                </button>
+                <button class="cancel-button"onclick="cancelEdit()">
+                    <a>Close</a>
+                </button>
+            
+        </div>
+
+        <div class="notes-grid" id="notesGrid"></div>
+    </div>
+
+    <script>
+        let db;
+        const DB_NAME = 'NotesDB';
+        const STORE_NAME = 'notes';
+        
+       
+
+        // Init of the app
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        async function initApp() {
+            await initDB();
+            await loadNotes();
+            checkOnlineStatus();
+            setupPWA();
+        }
+
+        // IndexedDB
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve();
+                };
+                
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                        store.createIndex('driveId', 'driveId', { unique: false });
+                    }
+                };
+            });
+        }
+
+        async function saveNote() {
+            const title = document.getElementById('noteTitle').value.trim();
+            const content = document.getElementById('noteContent').value.trim();
+            
+            if (!title || !content) {
+                alert('Title and Textfield should not be empty!');
+                return;
+            }
+
+            const note = {
+                title,
+                content,
+                timestamp: Date.now(),
+                synced: false
+            };
+
+            if (currentEditId) {
+                note.id = currentEditId;
+            }
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            if (currentEditId) {
+                await store.put(note);
+            } else {
+                await store.add(note);
+            }
+
+            cancelEdit();
+            await loadNotes();
+            
+            if (accessToken) {
+                syncNotes();
+            }
+        }
+
+        async function loadNotes() {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+
+            request.onsuccess = () => {
+                const notes = request.result;
+                displayNotes(notes);
+            };
+        }
+
+        function displayNotes(notes) {
+            const grid = document.getElementById('notesGrid');
+            
+            if (notes.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #888; grid-column: 1/-1;">Nothing Here :)</p>';
+                return;
+            }
+
+            grid.innerHTML = notes.reverse().map(note => `
+                <div class="note-card" onclick="editNote(${note.id})">
+                    <div class="note-title">${escapeHtml(note.title)}</div>
+                    <div class="note-content">${escapeHtml(note.content)}</div>
+                    <div class="note-meta">
+                        <span>${new Date(note.timestamp).toLocaleDateString('de-DE')}</span>
+                        <div class="note-actions">
+                            <button onclick="deleteNote(event, ${note.id})">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function editNote(id) {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.get(id);
+
+            request.onsuccess = () => {
+                const note = request.result;
+                if (note) {
+                    currentEditId = id;
+                    document.getElementById('noteTitle').value = note.title;
+                    document.getElementById('noteContent').value = note.content;
+                    showEditor();
+                }
+            };
+        }
+
+        async function deleteNote(event, id) {
+            event.stopPropagation();
+            
+            if (!confirm('Delete Note?')) return;
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            await store.delete(id);
+            
+            await loadNotes();
+        }
+
+        function showEditor() {
+            document.getElementById('editor').style.display = 'block';
+            document.getElementById('noteTitle').focus();
+        }
+
+        function cancelEdit() {
+            currentEditId = null;
+            document.getElementById('noteTitle').value = '';
+            document.getElementById('noteContent').value = '';
+            document.getElementById('editor').style.display = 'none';
+        }
+        // PWA Installation
+        function setupPWA() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('installPrompt').style.display = 'block';
+            });
+
+            window.addEventListener('appinstalled', () => {
+                document.getElementById('installPrompt').style.display = 'none';
+                deferredPrompt = null;
+            });
+        }
+
+        async function installApp() {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                document.getElementById('installPrompt').style.display = 'none';
+            }
+            
+            deferredPrompt = null;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (event) => {
+                    self.skipWaiting();
+                });
+
+                self.addEventListener('activate', (event) => {
+                    event.waitUntil(clients.claim());
+                });
+
+                self.addEventListener('fetch', (event) => {
+                    event.respondWith(
+                        fetch(event.request).catch(() => {
+                            return new Response('Offline', { status: 503 });
+                        })
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl);
+        }
+    </script>
+    <footer>
+			© 2025 Farin Altenhöner  <br> |
+			<a href="../websites/legal.html">Legal Info</a> | 
+			<a href="../websites/contact.html">Contact</a>|
+            <a href="../../changelog.html">Changelog</a>
+		</footer>
+</body>
+</html>
