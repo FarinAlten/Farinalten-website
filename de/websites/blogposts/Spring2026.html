@@ -4,10 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../css/style.css" rel="stylesheet">
-    <title>Farin Altenhöner | Blog</title>
+    <title>Blog - Farin Altenhöner</title>
     <link rel="icon" href="../../fav-icon.png" type="image/x-icon">
     <link rel="shortcut icon" href="../../fav-icon.png" type="image/x-icon">
 </head>
+<script>
+const viewer = document.getElementById("image-viewer");
+const viewerImage = document.getElementById("viewer-image");
+const viewerCaption = document.getElementById("viewer-caption");
+const closeButton = document.querySelector(".viewer-close");
+
+const images = document.querySelectorAll(".clickable-image");
+
+images.forEach(image => {
+
+    image.addEventListener("click", () => {
+
+        viewer.classList.add("active");
+
+        viewerImage.src = image.src;
+        viewerCaption.textContent = image.alt;
+
+        document.body.style.overflow = "hidden";
+    });
+
+});
+
+function closeViewer() {
+
+    viewer.classList.remove("active");
+
+    document.body.style.overflow = "";
+}
+
+closeButton.addEventListener("click", closeViewer);
+
+viewer.addEventListener("click", (e) => {
+
+    if (e.target === viewer) {
+        closeViewer();
+    }
+
+});
+
+document.addEventListener("keydown", (e) => {
+
+    if (e.key === "Escape") {
+        closeViewer();
+    }
+
+});
+</script>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-535RGT8S"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -20,10 +67,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <a class="nav-link" href="../../home.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../websites/projects.html">Projekte</a>
+                <a class="nav-link" href="../../websites/projects.html">Projects</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="../../websites/contact.html">Kontakt</a>
+            <a class="nav-link" href="../../websites/contact.html">Contact</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="../../websites/blog.html">Blog</a>
@@ -34,22 +81,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="headerbox">
             <span class="title">Frühling 2026</span>
             <p class="headersubtitle">
-                <br>Hier sind ein paar Bilder, die ich während des Winters und meistens während des Frühlings gemacht habe.<br><br>
-                Alles, was ich dazu genutzt habe, war mein daily-driver, mein iPhone 12 mini.<br><br>
-                Es war wirklich besonders, mit diesem Smartphone, so schöne Bilder, in schönen Momenten, zu machen. Es zeigt auch hier wieder, dass die Mini-iPhones auf keinen Fall schlechts waren ode sind!
+                <br>Here are my favorite apple watch faces <br><br>
+                <i><b>Please Note:</b>You will be redirected to Google Drive! </i>
             </p>
         </div>
         <div class="image-showcase">
-    <div class="image-card portrait">
-        <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040863/IMG_1972_l5k1ud.heic" alt="">
+
+    <div class="image-card landscape">
+        <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040808/IMG_1633_vlwzef.heic" alt="">
     </div>
-     <div class="image-card portrait">
+     <div class="image-card landscape">
+        <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040903/IMG_1540_i9cc6f.heic" alt="">
+    </div>
+    <div class="image-card portrait">
         <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779041137/IMG_1900_bwczbz.heic" alt="">
     </div>
     <div class="image-card portrait">
         <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779041031/IMG_1634_iibluk.heic" alt="">
     </div>
-    <div class="image-card portrait">
+     <div class="image-card portrait">
         <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779041027/IMG_1636_dp0yaw.heic" alt="">
     </div>
     <div class="image-card portrait">
@@ -58,23 +108,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="image-card portrait">
         <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040894/IMG_2010_ns4xhh.heic" alt="">
     </div>
-    <div class="image-card portrait">
+     <div class="image-card portrait">
+        <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040863/IMG_1972_l5k1ud.heic" alt="">
+    </div>
+     <div class="image-card portrait">
         <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040837/IMG_1927_udqmnv.heic" alt="">
     </div>
-    <div class="image-card landscape">
-        <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040808/IMG_1633_vlwzef.heic" alt="">
+
     </div>
-    <div class="image-card landscape">
-        <img src="https://res.cloudinary.com/dmn2h1vj7/image/upload/v1779040903/IMG_1540_i9cc6f.heic" alt="">
-    </div>
-</div> 
-        
+
+</div>
+        </div>
     </div>
     <footer>
         © 2026 Farin Altenhöner  <br> |
-        <a href="../../websites/legal.html">Impressum</a> | 
-        <a href="../../websites/contact.html">Kontakt</a> |
-        <a href="../../../en/websites/blogposts/Spring2026.html">English Version</a> |
+        <a href="../../websites/legal.html">Legal Info</a> | 
+        <a href="../../websites/contact.html">Contact</a> | 
+        <a href="../../../de/websites/blogposts/Spring2026.html">Deutsche Version</a>
     </footer>
 </body>
 </html>
