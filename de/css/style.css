@@ -479,3 +479,50 @@ footer a:hover {
         height: 150px;
     }
 }
+.nav-link,
+.Box,
+.image-card,
+.project-box,
+button,
+.button,
+.headerbox {
+    position: relative;
+    overflow: hidden;
+}
+.nav-link::before,
+.Box::before,
+.image-card::before,
+.project-box::before,
+button::before,
+.button::before,
+.headerbox::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--x, 50%) var(--y, 50%),
+        rgba(255, 255, 255, 0.35),
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+.nav-link:hover::before,
+.Box:hover::before,
+.image-card:hover::before,
+.project-box:hover::before,
+button:hover::before,
+.button:hover::before,
+.headerbox:hover::before {
+    opacity: 1;
+}
+.nav-link:active,
+.Box:active,
+.image-card:active,
+.project-box:active,
+button:active,
+.button:active {
+    transform: scale(0.98);
+    transition: transform 0.12s ease;
+}
