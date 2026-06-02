@@ -479,6 +479,10 @@ footer a:hover {
         height: 150px;
     }
 }
+/* =========================
+   LIQUID GLASS CORE EFFECT
+========================= */
+
 .nav-link,
 .Box,
 .image-card,
@@ -488,33 +492,34 @@ button,
 .headerbox {
     position: relative;
     overflow: hidden;
+    transform: translateZ(0);
 }
-.nav-link::before,
-.Box::before,
-.image-card::before,
-.project-box::before,
-button::before,
-.button::before,
-.headerbox::before {
+.nav-link::after,
+.Box::after,
+.image-card::after,
+.project-box::after,
+button::after,
+.button::after,
+.headerbox::after {
     content: "";
     position: absolute;
     inset: 0;
     background: radial-gradient(
         circle at var(--x, 50%) var(--y, 50%),
         rgba(255, 255, 255, 0.35),
-        transparent 40%
+        transparent 45%
     );
     opacity: 0;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.2s ease;
     pointer-events: none;
 }
-.nav-link:hover::before,
-.Box:hover::before,
-.image-card:hover::before,
-.project-box:hover::before,
-button:hover::before,
-.button:hover::before,
-.headerbox:hover::before {
+.nav-link:hover::after,
+.Box:hover::after,
+.image-card:hover::after,
+.project-box:hover::after,
+button:hover::after,
+.button:hover::after,
+.headerbox:hover::after {
     opacity: 1;
 }
 .nav-link:active,
@@ -522,7 +527,8 @@ button:hover::before,
 .image-card:active,
 .project-box:active,
 button:active,
-.button:active {
+.button:active,
+.headerbox:active {
     transform: scale(0.98);
     transition: transform 0.12s ease;
 }
