@@ -1,75 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/style.css" rel="stylesheet">
-    <title>Farin Altenhöner | Projekte</title>
-    		<link rel="icon" href="../fav-icon.png" type="image/x-icon">
-		<link rel="shortcut icon" href="../fav-icon.png" type="image/x-icon">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../css/style.css" rel="stylesheet" />
+        <title>Farin Altenhöner | Projekte</title>
+        <link rel="icon" href="../fav-icon.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../fav-icon.png" type="image/x-icon" />
         <script src="../sources/script/js/gtag.js"></script>
-</head>
-<body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-535RGT8S"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <nav>
-        <ul class="navbar-nav">
-            <li class="nav-item">
+    </head>
+    <body>
+        <noscript
+            ><iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-535RGT8S"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe
+        ></noscript>
+
+        <nav>
+            <div class="nav-container">
                 <a class="nav-logo" href="../home.html">
-					<img src="../fav-icon.png" alt="Logo" class="logo-img">
-				</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../home.html">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="../websites/projects.html">Projekte</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="../websites/contact.html">Kontakte</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../websites/blog.html">Blog</a>
-            </li>
-           </ul>
-</nav>
-    <div class="content">
-	    <div class="headerbox">
-            <span class="title">Projekte</span>
-            <p class="headersubtitle">
-                <br>Hier sind meine Projekte zu finden.<br><br>
-               Die meisten Projekte habe ich inklusive Source Code auf Github hochgeladen.
-            </p>
-        </div>
-        <div class="gallery">
-            <div class="project-box" onclick="window.location.href ='../websites/projects/calcify/calculator.html'">
-                <img class="gallery-img" src="../pictures/logo-header-calcify.png" alt="Calcify Icon" />
-                <div class="project-box-content">
-                    <h3 class="title">Taschenrechner</h3>
-                    <p class="subtitle">
-                        Ein simpler Web-Taschenrechner <br><br>
-                        <i><b>Hinweis:</b> Füge diese Website zum Homebilrdschirm oder Desktop hinzu!</i>
-                    </p>
+                    <img src="../fav-icon.png" alt="Logo" class="logo-img" />
+                </a>
+                <div class="nav-links">
+                    <a class="nav-link" href="../home.html">Home</a>
+                    <a class="nav-link active" href="../websites/projects.html"
+                        >Projekte</a
+                    >
+                    <a class="nav-link" href="../websites/contact.html"
+                        >Kontakt</a
+                    >
+                    <a class="nav-link" href="../websites/blog.html">Blog</a>
                 </div>
             </div>
-            <div class="project-box" onclick="window.location.href ='https://www.github.com/farinalten/luno'">
-                <img class="gallery-img" src="../pictures/logo-header-luno.png" alt="Luno Icon" />
-                <div class="project-box-content">
-                    <h3 class="title">Luno - Web Browser</h3>
-                    <p class="subtitle">
-                        Ein Leistungsstarker Browser für das iPad<br><br>
-                        Modern und einfach zu nutzen.
-                    </p>
+        </nav>
+
+        <main class="content">
+            <header class="headerbox">
+                <h1 class="title">Projekte</h1>
+                <p class="headersubtitle">
+                    Hier sind einige meiner Software-Entwicklungsprojekte
+                    aufgelistet.
+                </p>
+                <p class="headersubtitle">
+                    Die meisten Projekte sind auch auf meinem GitHub-Account zu
+                    finden!
+                </p>
+            </header>
+
+            <section class="project-gallery">
+                <div
+                    class="project-box"
+                    onclick="
+                        window.location.href =
+                            '../websites/projects/calcify/calculator.html'
+                    "
+                >
+                    <img
+                        class="gallery-img"
+                        src="../pictures/logo-header-calcify.png"
+                        alt="Calcify Icon"
+                    />
+                    <div class="project-box-content">
+                        <h3 class="title">Calcify</h3>
+                        <p class="subtitle">
+                            Ein einfacher Web-Taschenrechner für schnelle
+                            Mathematik.<br /><br />
+                            <i
+                                ><b>Tipp:</b> Füge es als Progressive Web App
+                                (PWA) zu deinem Desktop oder Startbildschirm
+                                hinzu!</i
+                            >
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div
+                    class="project-box"
+                    onclick="
+                        window.location.href =
+                            'https://www.github.com/farinalten/luno'
+                    "
+                >
+                    <img
+                        class="gallery-img"
+                        src="../pictures/logo-header-luno.png"
+                        alt="Luno Icon"
+                    />
+                    <div class="project-box-content">
+                        <h3 class="title">Luno - Webbrowser</h3>
+                        <p class="subtitle">
+                            Ein leistungsstarker Webbrowser für das iPad.<br /><br />
+                            Modern, schnell und einfach zu bedienen.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
         <footer>
-			© 2026 Farin Altenhöner <br>| 
-			<a href="../websites/legal.html">Impressum</a> | 
-			<a href="../websites/contact.html">Kontakt</a> |
-			<a href="../websites/changelog.html">Changelog</a> |
-            <a href="../../en/websites/projects.html">English Version</a> |
-		</footer>
-</body>
+            <span>© 2026 Farin Altenhöner</span>
+            <div class="footer-links">
+                <a href="../websites/legal.html">Impressum & Rechtliches</a>
+                <a href="../websites/contact.html">Kontakt</a>
+                <a href="../websites/changelog.html">Changelog</a>
+                <a href="../../en/websites/projects.html">English Version</a>
+            </div>
+        </footer>
+    </body>
 </html>

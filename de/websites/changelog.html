@@ -1,181 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farin Altenhöner | Changelog</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Farin Altenhöner | Changelog</title>
+        <link href="../css/style.css" rel="stylesheet" />
+        <link rel="icon" href="../fav-icon.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../fav-icon.png" type="image/x-icon" />
+        <script src="../sources/script/js/gtag.js"></script>
+    </head>
+    <body>
+        <noscript>
+            <iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-535RGT8S"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            >
+            </iframe>
+        </noscript>
 
-    <link href="../css/style.css" rel="stylesheet">
-    <link rel="icon" href="../fav-icon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="../fav-icon.png" type="image/x-icon">
-
-    <script src="../sources/script/js/gtag.js"></script>
-</head>
-
-<body>
-
-    <noscript>
-        <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-535RGT8S"
-            height="0"
-            width="0"
-            style="display:none;visibility:hidden">
-        </iframe>
-    </noscript>
-
-    <nav>
-        <ul class="navbar-nav">
-
-            <li class="nav-item">
+        <nav>
+            <div class="nav-container">
                 <a class="nav-logo" href="../home.html">
-                    <img src="../fav-icon.png" alt="Logo" class="logo-img">
+                    <img src="../fav-icon.png" alt="Logo" class="logo-img" />
                 </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="../home.html">Home</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link active" href="../websites/projects.html">
-                    Projekte
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="../websites/contact.html">
-                    Kontakte
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="../websites/blog.html">
-                    Blog
-                </a>
-            </li>
-
-        </ul>
-    </nav>
-
-    <div class="content">
-
-        <div class="headerbox">
-            <a class="title">Changelog</a>
-
-            <p class="subtitle">
-                Hier sind die letzten Änderungen an dieser Website. <b>Hinweis: Beim Aufrufen dieser Seite werden Daten von einer Github Repo abgerufen.</b>
-            </p>
-        </div>
-
-        <div class="gallery" id="changelog-container">
-
-            <div class="Box">
-                <h3 class="title">Lade...</h3>
-
-                <p class="subtitle">
-                    Lade Änderungen aus der Github-Repo
-                </p>
+                <div class="nav-links">
+                    <a class="nav-link" href="../home.html">Home</a>
+                    <a class="nav-link active" href="../websites/projects.html"
+                        >Projekte</a
+                    >
+                    <a class="nav-link" href="../websites/contact.html"
+                        >Kontakt</a
+                    >
+                    <a class="nav-link" href="../websites/blog.html">Blog</a>
+                </div>
             </div>
+        </nav>
 
-        </div>
+        <main class="content">
+            <header class="headerbox">
+                <h1 class="title">Changelog</h1>
+                <p class="headersubtitle">
+                    Hier sind die neuesten Änderungen an der Website zu sehen.
+                    <strong
+                        >Hinweis: Um die Informationen für diese Seite zu laden,
+                        werden Daten aus einem GitHub-Repository
+                        abgerufen.</strong
+                    >
+                </p>
+            </header>
 
-    </div>
+            <section class="gallery" id="changelog-container">
+                <div class="Box">
+                    <h3 class="title">Wird geladen...</h3>
+                    <p class="subtitle">
+                        Die neuesten Änderungen werden abgerufen.
+                    </p>
+                </div>
+            </section>
+        </main>
 
-    <footer>
-        © 2026 Farin Altenhöner <br> |
+        <footer>
+            <span>© 2026 Farin Altenhöner</span>
+            <div class="footer-links">
+                <a href="../websites/legal.html">Impressum & Rechtliches</a>
+                <a href="../websites/contact.html">Kontakt</a>
+                <a href="../../en/websites/changelog.html">English Version</a>
+            </div>
+        </footer>
 
-        <a href="../websites/legal.html">
-            Impressum
-        </a> |
+        <script>
+            async function loadChangelog() {
+                const container = document.getElementById(
+                    "changelog-container",
+                );
+                const username = "farinalten";
+                const repository = "Farinalten-website";
+                const apiUrl = `https://api.github.com/repos/${username}/${repository}/commits`;
 
-        <a href="../websites/contact.html">
-            Kontakt
-        </a> |
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) {
+                        throw new Error("GitHub API Error");
+                    }
+                    const commits = await response.json();
+                    container.innerHTML = "";
 
-        <a href="../../en/websites/changelog.html">
-            English Version
-        </a> |
-    </footer>
-    <script>
-async function loadChangelog() {
+                    commits.forEach((commitData) => {
+                        const box = document.createElement("div");
+                        box.className = "Box";
+                        const commit = commitData.commit;
+                        const formattedDate = new Date(
+                            commit.author.date,
+                        ).toLocaleDateString("de-DE");
+                        const commitMessage = commit.message;
+                        const author = commit.author.name;
 
-    const container =
-        document.getElementById("changelog-container");
-
-    const username = "farinalten";
-    const repository = "Farinalten-website";
-
-    const apiUrl =
-        `https://api.github.com/repos/${username}/${repository}/commits`;
-
-    try {
-
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-            throw new Error("GitHub API Error");
-        }
-
-        const commits = await response.json();
-
-        container.innerHTML = "";
-
-        commits.forEach(commitData => {
-
-            const box = document.createElement("div");
-
-            box.className = "Box";
-
-            const commit = commitData.commit;
-
-            const formattedDate =
-                new Date(commit.author.date)
-                .toLocaleDateString("de-DE");
-
-            const commitMessage =
-                commit.message;
-
-            const author =
-                commit.author.name;
-
-            box.innerHTML = `
-                <h3 class="title">
-                    ${formattedDate}
-                </h3>
-
+                        box.innerHTML = `
+                <h3 class="title">${formattedDate}</h3>
                 <p class="subtitle">
-                    <strong>${author}</strong>
-                    <br><br>
-
+                    <strong>${author}</strong><br><br>
                     ${commitMessage.replace(/\n/g, "<br>")}
                 </p>
             `;
-
-            container.appendChild(box);
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        container.innerHTML = `
+                        container.appendChild(box);
+                    });
+                } catch (error) {
+                    console.error(error);
+                    container.innerHTML = `
             <div class="Box">
-
-                <h3 class="title">
-                    Error!
-                </h3>
-
-                <p class="subtitle">
-                    The latest changes could not be loaded.
-                </p>
-
+                <h3 class="title">Fehler!</h3>
+                <p class="subtitle">Die neuesten Änderungen konnten nicht geladen werden.</p>
             </div>
         `;
-    }
-}
-
-loadChangelog();
-</script>
-</body>
+                }
+            }
+            loadChangelog();
+        </script>
+    </body>
 </html>
