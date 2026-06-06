@@ -24,7 +24,15 @@ body {
     margin: 0;
     padding-top: var(--nav-height);
     font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+        "SF Pro Display",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Geist",
+        "Inter",
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
         sans-serif;
     background-color: var(--bg-light);
     color: var(--text-light);
@@ -482,7 +490,9 @@ footer a:hover {
 .viewer-caption {
     margin-top: 16px;
     color: #999999;
-    font-size: 0.95rem;
+    font-family:
+        "Geist Mono", "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.9rem;
     letter-spacing: -0.01em;
     text-align: center;
 }
