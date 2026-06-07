@@ -440,6 +440,7 @@ footer a:hover {
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .clickable-image {
     cursor: pointer;
@@ -500,6 +501,8 @@ footer a:hover {
 =======
 =======
 >>>>>>> parent of 27f2b38 (removed liquid glass effects)
+=======
+>>>>>>> parent of 27f2b38 (removed liquid glass effects)
 /* =========================
    LIQUID GLASS CORE EFFECT
 ========================= */
@@ -552,8 +555,4 @@ button:active,
 .headerbox:active {
     transform: scale(0.98);
     transition: transform 0.12s ease;
-<<<<<<< HEAD
->>>>>>> parent of 27f2b38 (removed liquid glass effects)
-=======
->>>>>>> parent of 27f2b38 (removed liquid glass effects)
 }
