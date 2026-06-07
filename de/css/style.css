@@ -35,7 +35,18 @@ body {
 
     font-family: "Inter", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
-    background: radial-gradient(circle at center, #667eea, #764ba2);
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(59, 130, 246, 0.45),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(168, 85, 247, 0.45),
+            transparent 35%
+        ),
+        linear-gradient(135deg, #020617, #0f172a, #111827);
 
     color: var(--text-light);
 
@@ -469,7 +480,18 @@ footer a:hover {
 }
 @media (prefers-color-scheme: dark) {
     body {
-        background: radial-gradient(circle at center, #667eea, #764ba2);
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(59, 130, 246, 0.45),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at bottom right,
+                rgba(168, 85, 247, 0.45),
+                transparent 35%
+            ),
+            linear-gradient(135deg, #020617, #0f172a, #111827);
         color: var(--text-dark);
     }
     nav,
@@ -507,7 +529,18 @@ footer a:hover {
     }
 }
 [data-theme="dark"] body {
-    background: radial-gradient(circle at center, #667eea, #764ba2) !important;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(59, 130, 246, 0.45),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(168, 85, 247, 0.45),
+            transparent 35%
+        ),
+        linear-gradient(135deg, #020617, #0f172a, #111827) !important;
     color: white !important;
 }
 [data-theme="dark"] nav,
