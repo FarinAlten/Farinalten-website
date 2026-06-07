@@ -438,6 +438,7 @@ footer a:hover {
         align-items: flex-start;
     }
 }
+<<<<<<< HEAD
 
 .clickable-image {
     cursor: pointer;
@@ -495,4 +496,58 @@ footer a:hover {
     font-size: 0.9rem;
     letter-spacing: -0.01em;
     text-align: center;
+=======
+/* =========================
+   LIQUID GLASS CORE EFFECT
+========================= */
+
+.nav-link,
+.Box,
+.image-card,
+.project-box,
+button,
+.button,
+.headerbox {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+.nav-link::after,
+.Box::after,
+.image-card::after,
+.project-box::after,
+button::after,
+.button::after,
+.headerbox::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--x, 50%) var(--y, 50%),
+        rgba(255, 255, 255, 0.35),
+        transparent 45%
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+.nav-link:hover::after,
+.Box:hover::after,
+.image-card:hover::after,
+.project-box:hover::after,
+button:hover::after,
+.button:hover::after,
+.headerbox:hover::after {
+    opacity: 1;
+}
+.nav-link:active,
+.Box:active,
+.image-card:active,
+.project-box:active,
+button:active,
+.button:active,
+.headerbox:active {
+    transform: scale(0.98);
+    transition: transform 0.12s ease;
+>>>>>>> parent of 27f2b38 (removed liquid glass effects)
 }
